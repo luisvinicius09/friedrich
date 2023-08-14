@@ -1,0 +1,48 @@
+{
+	"name": "fastify-typescript-starter",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node dist/server.js",
+		"start:dev": "tsx watch src/bootstrap.ts",
+		"build": "tsup src --out-dir dist",
+		"test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
+		"test:install-prisma-environment": "npm link vitest-environment-prisma",
+		"test": "vitest run --dir src/use-cases",
+		"test:watch": "vitest --dir src/use-cases",
+		"pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
+		"test:e2e": "vitest run --dir src/http",
+		"eslint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+		"eslint:fix": "eslint --ignore-path .eslintignore --ext .js,.ts . --fix"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@prisma/client": "5.0.0",
+		"bcryptjs": "2.4.3",
+		"dotenv": "16.3.1",
+		"fastify": "^4.20.0",
+		"zod": "3.21.4"
+	},
+	"devDependencies": {
+		"@rocketseat/eslint-config": "2.1.0",
+		"@types/bcryptjs": "2.4.2",
+		"@types/node": "^20.4.2",
+		"@types/supertest": "2.0.12",
+		"@typescript-eslint/eslint-plugin": "6.1.0",
+		"@typescript-eslint/parser": "6.1.0",
+		"eslint": "8.45.0",
+		"eslint-config-prettier": "8.8.0",
+		"npm-run-all": "4.1.5",
+		"prettier": "3.0.0",
+		"prisma": "5.0.0",
+		"supertest": "6.3.3",
+		"tsup": "^7.1.0",
+		"tsx": "^3.12.7",
+		"typescript": "^4.9.5",
+		"vite-tsconfig-paths": "4.2.0",
+		"vitest": "0.33.0"
+	}
+}

@@ -1,0 +1,11 @@
+
+
+services:
+  socrates-pg:
+    image: "bitnami/postgresql:latest"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRESQL_USERNAME=template-pg
+      - POSTGRESQL_PASSWORD=template-pw
+      - POSTGRESQL_DATABASE=template-db
