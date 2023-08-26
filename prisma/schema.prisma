@@ -11,20 +11,55 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String?
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  document    String
+  phoneNumber Int
+  password    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  UserAddress UserAddress?
+
+  UserClient UserClient[]
 
   @@map("users")
 }
 
-model Course {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  createdAt   DateTime @default(now())
+model UserAddress {
+  id           String   @id @default(uuid())
+  street       String
+  number       String
+  neighborhood String
+  complement   String?
+  updatedAt    DateTime @default(now())
 
-  @@map("courses")
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("usersAddresses")
+}
+
+model UserClient {
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  name        String
+  document    String
+  phoneNumber Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  UserClientAddress UserClientAddress?
+
+  @@id([userId])
+  @@map("usersClients")
+}
+
+model UserClientAddress {
+  userClientId String
+  userClient   UserClient @relation(fields: [userClientId], references: [userId])
+
+  @@id([userClientId])
+  @@map("usersClientsAddresses")
 }
