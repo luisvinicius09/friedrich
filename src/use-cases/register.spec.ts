@@ -17,7 +17,9 @@ describe('Register Use Case', () => {
 		const { user } = await sut.execute({
 			email: 'joe@doe.com',
 			name: 'Joe Doe',
-			password: 'joe-doe-pw'
+			password: 'joe-doe-pw',
+			document: '12345678919',
+			phoneNumber: 1234567890,
 		});
 
 		const isPasswordHashed = await compare('joe-doe-pw', user.password);
@@ -29,7 +31,9 @@ describe('Register Use Case', () => {
 		const { user } = await sut.execute({
 			email: 'joe@doe.com',
 			name: 'Joe Doe',
-			password: 'joe-doe-pw'
+			password: 'joe-doe-pw',
+			document: '12345678919',
+			phoneNumber: 1234567890,
 		});
 
 		expect(user.id).toEqual(expect.any(String));
@@ -40,14 +44,19 @@ describe('Register Use Case', () => {
 		await sut.execute({
 			email,
 			name: 'Joe Doe',
-			password: 'joe-doe-pw'
+			password: 'joe-doe-pw',
+			document: '12345678919',
+			phoneNumber: 1234567890,
 		});
 
-		await expect(sut.execute({
-			email,
-			name: 'Joe Doe 2',
-			password: 'joe-doe-pw'
-		})).rejects.toBeInstanceOf(UserAlreadyExistsError);
-
+		await expect(
+			sut.execute({
+				email,
+				name: 'Joe Doe 2',
+				password: 'joe-doe-pw',
+				document: '12345678919',
+				phoneNumber: 1234567890,
+			}),
+		).rejects.toBeInstanceOf(UserAlreadyExistsError);
 	});
 });
