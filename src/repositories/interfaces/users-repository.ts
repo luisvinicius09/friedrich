@@ -1,7 +1,11 @@
 import { Prisma, User } from '@prisma/client';
 
 export interface UsersRepository {
-  create(data: Prisma.UserCreateInput): Promise<User>;
+	create(data: Prisma.UserCreateManyInput): Promise<User>;
 
-  findUserByEmail(email: string): Promise<User | null>;
+	findByEmail(email: string): Promise<User | null>;
+
+	findByUserId(userId: string): Promise<User | null>;
+
+	update(userId: string, data: Prisma.UserUncheckedUpdateManyInput): Promise<User>;
 }
