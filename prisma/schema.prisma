@@ -38,7 +38,7 @@ model UserAddress {
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
 
-  @@map("usersAddresses")
+  @@map("users-addresses")
 }
 
 model UserClient {
@@ -53,7 +53,7 @@ model UserClient {
   UserClientAddress UserClientAddress?
 
   @@id([userId])
-  @@map("usersClients")
+  @@map("users-clients")
 }
 
 model UserClientAddress {
