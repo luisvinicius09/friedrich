@@ -3,8 +3,8 @@ An app related to finance and stuff
 Functional Logic
 - [x] Should be able to register
 - [ ] Should be able to authenticate
-- [ ] Should be able to update some of it's personal information
-- [ ] Should be able to fill it's personal address
+- [x] Should be able to update some of it's personal information
+- [x] Should be able to fill it's personal address
 - [ ] 
 - [ ] 
 - [ ] Should be able to register clients
