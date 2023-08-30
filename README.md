@@ -1,35 +1,37 @@
-## Setup DB
+# Setup DB
 
-- Requirements:
+### Requirements:
 
-  - Docker installed
+- Docker installed and running
 
-- Run `docker compose up -d` on the terminal
+Run `docker compose up -d` on the terminal
 
-## Setup E2E tests
+# Run unit tests
 
-- Make sure that database is running on docker
+No database/docker needed
 
-- Using NPM (default)
+- **NPM**: npm test
+- **PNPM**: pnpm test
+- **YARN**: yarn test
+
+# Setup & Run E2E tests
+
+### Make sure that database is running on docker
+
+- Using **NPM** (default)
 
   - npm run test:e2e
 
-- Using PNPM
+- Using **PNPM**
 
   - pnpm link ./prisma/vitest-environment-prisma
   - pnpm test:e2e
 
-- Using YARN
-  - ** It will fail at the moment **
+- Using **YARN**
+  - **It will fail at the moment**
 
-## Run application
+# Run app
 
-- NPM: npm run start:dev
-- PNPM: pnpm start:dev
-- YARN: yarn start:dev
-
-## Run unit tests
-
-- NPM: npm test
-- PNPM: pnpm test
-- YARN: yarn test
+- **NPM**: npm run start:dev
+- **PNPM**: pnpm start:dev
+- **YARN**: yarn start:dev
