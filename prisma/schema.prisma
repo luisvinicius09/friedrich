@@ -22,7 +22,8 @@ model User {
 
   UserAddress UserAddress?
 
-  UserClient UserClient[]
+  UserClient  UserClient[]
+  UserProduct UserProduct[]
 
   @@map("users")
 }
@@ -62,4 +63,19 @@ model UserClientAddress {
 
   @@id([userClientId])
   @@map("usersClientsAddresses")
+}
+
+model UserProduct {
+  id         String   @id @default(uuid())
+  userId     String
+  name       String
+  value      Int
+  fixedValue Boolean
+  active     Boolean
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("users-products")
 }
