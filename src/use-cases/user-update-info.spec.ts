@@ -1,13 +1,13 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { UserUpdateInfoUseCase } from './user-update-info';
 
 let usersRepository: UsersRepository;
 let sut: UserUpdateInfoUseCase;
 
 describe('User update info use case', () => {
-	beforeAll(() => {
+	beforeEach(() => {
 		usersRepository = new InMemoryUsersRepository();
 		sut = new UserUpdateInfoUseCase(usersRepository);
 	});
