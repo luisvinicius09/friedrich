@@ -3,14 +3,17 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-user
 import { UsersAddressesRepository } from '@/repositories/interfaces/users-addresses-repository';
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { UserFillAddressUseCase } from './user-fill-address';
 
 let usersRepository: UsersRepository;
-let sut: UsersAddressesRepository;
+let usersAddressesRepository: UsersAddressesRepository;
+let sut: UserFillAddressUseCase;
 
 describe('User fill address use case', () => {
 	beforeEach(() => {
 		usersRepository = new InMemoryUsersRepository();
-		sut = new InMemoryUsersAddressesRepository();
+		usersAddressesRepository = new InMemoryUsersAddressesRepository();
+		sut = new UserFillAddressUseCase(usersAddressesRepository);
 	});
 
 	it('should fill the user address', async () => {
@@ -22,7 +25,7 @@ describe('User fill address use case', () => {
 			phoneNumber: 12345678,
 		});
 
-		const userAddress = await sut.create({
+		const { userAddress } = await sut.execute({
 			userId: user.id,
 			neighborhood: 'Joe Doe Neighborhood',
 			number: '1234',
