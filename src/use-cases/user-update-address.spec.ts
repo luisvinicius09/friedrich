@@ -1,7 +1,6 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
-import { describe, it } from 'node:test';
-import { beforeAll } from 'vitest';
+import { beforeAll, describe, it } from 'vitest';
 
 let usersRepository: UsersRepository;
 let sut: UserUpdateAddressUseCase;
