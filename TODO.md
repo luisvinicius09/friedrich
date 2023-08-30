@@ -7,7 +7,7 @@ Functional Logic
 - [x] Should be able to fill it's personal address
 - [ ] 
 - [ ] 
-- [ ] Should be able to register clients
+- [x] Should be able to create clients
 - [ ] Should be able to update a client
 - [ ] Should be able to bill clients
 - [ ] 
