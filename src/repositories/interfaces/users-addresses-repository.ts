@@ -1,12 +1,12 @@
 import { Prisma, UserAddress } from '@prisma/client';
 
 export interface UsersAddressesRepository {
-	create: (data: Prisma.UserAddressUncheckedCreateInput) => Promise<UserAddress>;
+	create(data: Prisma.UserAddressUncheckedCreateInput): Promise<UserAddress>;
 
-	findByUserId: (userId: string) => Promise<UserAddress | null>;
+	findByUserId(userId: string): Promise<UserAddress | null>;
 
-	update: (
+	update(
 		userId: string,
 		data: Prisma.UserAddressUpdateWithoutUserInput,
-	) => Promise<UserAddress>;
+	): Promise<UserAddress>;
 }
