@@ -42,6 +42,7 @@ model UserAddress {
 }
 
 model UserClient {
+  id          String   @id @default(uuid())
   userId      String
   user        User     @relation(fields: [userId], references: [id])
   name        String
@@ -52,13 +53,12 @@ model UserClient {
 
   UserClientAddress UserClientAddress?
 
-  @@id([userId])
   @@map("users-clients")
 }
 
 model UserClientAddress {
   userClientId String
-  userClient   UserClient @relation(fields: [userClientId], references: [userId])
+  userClient   UserClient @relation(fields: [userClientId], references: [id])
 
   @@id([userClientId])
   @@map("usersClientsAddresses")
