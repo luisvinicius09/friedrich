@@ -7,12 +7,15 @@ Functional Logic
 - [x] Should be able to update some of it's personal information
 - [x] Should be able to fill it's personal address
 - [ ]
-- [ ]
 - [x] Should be able to create clients
 - [x] Should be able to update a client
+- [ ] Should be able to delete a client
 - [ ] Should be able to bill clients
+- [ ] Should be able to access a bill history
 - [x] Should be able to create products/services
 - [ ] Should be able to update products/services
+- [ ] Should be able to delete products/services
+- [ ]
 - [ ]
 - [ ]
 
@@ -22,6 +25,8 @@ Business rules
 - [x] Each user will be able to have multiple clients registered
 - [ ] A user doesn't need to fill it's address information
 - [ ] A user will posibly be restricted if address information is not filled
+- [ ] The bill history will not be deleted if the user client or the product is deleted
+- [ ] The user will have access to multiple plans that it can pay for more funcionalities.
 - [ ]
 - [ ]
 
@@ -41,3 +46,9 @@ Questions
 - [ ]
 - [ ]
 - [ ]
+
+Fixes
+- [ ] Need to fix prisma schema file: adding cascade actions
+- [ ] 
+- [ ] 
+- [ ] 
