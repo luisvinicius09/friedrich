@@ -13,8 +13,8 @@ Functional Logic
 - [ ] Should be able to bill clients
 - [ ] Should be able to access a bill history
 - [x] Should be able to create products/services
-- [ ] Should be able to update products/services
-- [ ] Should be able to delete products/services
+- [x] Should be able to update products/services
+- [x] Should be able to delete products/services
 - [ ]
 - [ ]
 - [ ]
