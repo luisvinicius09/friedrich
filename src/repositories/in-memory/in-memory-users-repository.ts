@@ -12,9 +12,10 @@ export class InMemoryUsersRepository implements UsersRepository {
 			password: z.string(),
 			document: z.string(),
 			phoneNumber: z.number(),
+			isAdmin: z.boolean().optional(),
 		});
 
-		const { name, email, password, document, phoneNumber } =
+		const { name, email, password, document, phoneNumber, isAdmin } =
 			userSchema.parse(data);
 
 		const user = {
@@ -24,6 +25,7 @@ export class InMemoryUsersRepository implements UsersRepository {
 			password: password,
 			document: document,
 			phoneNumber: phoneNumber,
+			isAdmin: isAdmin ?? false,
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		};

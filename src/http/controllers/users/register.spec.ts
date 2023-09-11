@@ -11,11 +11,13 @@ describe('Register E2E', () => {
 		await app.close();
 	});
 
-	it('should register the user', async () => {
-		const response = await request(app.server).post('/').send({
-			name: 'John Doe',
-			email: 'johndoe@email.com',
+	it('should register a user', async () => {
+		const response = await request(app.server).post('/register').send({
+			name: 'Joe Doe',
+			document: '132456789',
+			email: 'joe@email.com',
 			password: 'joe-doe-pw',
+			phoneNumber: 123456798,
 		});
 
 		expect(response.statusCode).toBe(201);

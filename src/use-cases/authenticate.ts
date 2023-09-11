@@ -1,18 +1,36 @@
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
+import { User } from '@prisma/client';
+import { compare } from 'bcryptjs';
+import { InvalidCredentialsError } from './errors/invalid-credentails-error';
+
+interface AuthenticateUseCaseRequest {
+	email: string;
+	password: string;
+}
+
+interface AuthenticateUseCaseResponse {
+	user: User;
+}
 
 export class AuthenticateUseCase {
 	constructor(private usersRepository: UsersRepository) {}
 
-	async execute() {
-		const user = await this.usersRepository.findByEmail('');
+	async execute({
+		email,
+		password,
+	}: AuthenticateUseCaseRequest): Promise<AuthenticateUseCaseResponse> {
+		const user = await this.usersRepository.findByEmail(email);
 
 		if (!user) {
-			throw new Error('User not found'); // Create error for this
+			throw new InvalidCredentialsError();
 		}
 
-		// validate user password here
-    
+		const doesPasswordMatch = await compare(password, user.password);
 
-		return user;
+		if (!doesPasswordMatch) {
+			throw new InvalidCredentialsError();
+		}
+
+		return { user };
 	}
 }
