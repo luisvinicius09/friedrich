@@ -2,7 +2,7 @@ import { makeCreateProductUseCase } from '@/use-cases/factories/make-create-prod
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-export async function CreateProduct(req: FastifyRequest, reply: FastifyReply) {
+export async function createProduct(req: FastifyRequest, reply: FastifyReply) {
 	const createProductBodySchema = z.object({
 		name: z.string(),
 		value: z.number(),
