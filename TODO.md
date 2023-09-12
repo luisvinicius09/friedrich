@@ -52,3 +52,6 @@ Fixes
 - [ ] 
 - [ ] 
 - [ ] 
+
+Temporary todos
+- [ ] Add email column to user clients
