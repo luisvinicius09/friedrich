@@ -12,9 +12,10 @@ export class InMemoryUsersClientsRepository implements UsersClientsRepository {
 			name: z.string(),
 			document: z.string(),
 			phoneNumber: z.number(),
+			email: z.string().email(),
 		});
 
-		const { userId, name, document, phoneNumber } = clientSchema.parse(data);
+		const { userId, name, document, phoneNumber, email } = clientSchema.parse(data);
 
 		const userClient = {
 			id: data.id ?? randomUUID(),
@@ -22,6 +23,7 @@ export class InMemoryUsersClientsRepository implements UsersClientsRepository {
 			name: name,
 			document: document,
 			phoneNumber: phoneNumber,
+			email: email,
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		};

@@ -30,6 +30,7 @@ describe('Update client use case', () => {
 			name: 'John Doe',
 			phoneNumber: 123456789,
 			userId: user.id,
+			email: 'john@email.com',
 		});
 
 		expect(clientCreated.name).toEqual('John Doe');
@@ -41,6 +42,7 @@ describe('Update client use case', () => {
 			name: 'John Doe 2',
 			phoneNumber: 12345,
 			clientId: clientCreated.id,
+			email: 'john@doe2.com',
 		});
 
 		expect(client.id).toEqual(expect.any(String));

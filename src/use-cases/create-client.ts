@@ -6,6 +6,7 @@ interface CreateClientUseCaseRequest {
 	name: string;
 	document: string;
 	phoneNumber: number;
+	email: string;
 }
 
 interface CreateClientUseCaseResponse {
@@ -20,12 +21,14 @@ export class CreateClientUseCase {
 		name,
 		document,
 		phoneNumber,
+		email,
 	}: CreateClientUseCaseRequest): Promise<CreateClientUseCaseResponse> {
 		const userClient = await this.usersClientsRepository.create({
 			userId: userId,
 			name: name,
 			document: document,
 			phoneNumber: phoneNumber,
+			email,
 		});
 
 		return { userClient };

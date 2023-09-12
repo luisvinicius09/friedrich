@@ -24,6 +24,7 @@ describe('Create Client E2E', () => {
 				name: 'Client 1',
 				document: '123456789',
 				phoneNumber: 123456789,
+				email: 'client1@hotmail.com',
 			});
 
 		expect(response.statusCode).toBe(200);
@@ -33,6 +34,7 @@ describe('Create Client E2E', () => {
 				name: 'Client 1',
 				document: '123456789',
 				phoneNumber: 123456789,
+				email: 'client1@hotmail.com',
 			}),
 		});
 	});

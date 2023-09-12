@@ -29,6 +29,7 @@ describe('Create client use case', () => {
 			name: 'John Doe',
 			phoneNumber: 123456789,
 			userId: user.id,
+			email: 'john@doe.com',
 		});
 
 		expect(client.id).toEqual(expect.any(String));

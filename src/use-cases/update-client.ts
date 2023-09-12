@@ -6,6 +6,7 @@ interface UpdateClientUseCaseRequest {
 	name: string;
 	document: string;
 	phoneNumber: number;
+	email: string;
 }
 
 interface UpdateClientUseCaseResponse {
@@ -20,6 +21,7 @@ export class UpdateClientUseCase {
 		name,
 		document,
 		phoneNumber,
+		email,
 	}: UpdateClientUseCaseRequest): Promise<UpdateClientUseCaseResponse> {
 		const client = await this.usersClientsRepository.findByClientId(clientId);
 
@@ -31,6 +33,7 @@ export class UpdateClientUseCase {
 			name: name,
 			document: document,
 			phoneNumber: phoneNumber,
+			email: email,
 		});
 
 		return { userClient };
