@@ -1,5 +1,6 @@
 import { UsersProductsRepository } from '@/repositories/interfaces/users-products-repository';
 import { UserProduct } from '@prisma/client';
+import { ResourceNotFoundError } from './errors/resource-not-found-error';
 
 interface UpdateProductUseCaseRequest {
 	active?: boolean;
@@ -21,6 +22,12 @@ export class UpdateProductUseCase {
 		name,
 		active,
 	}: UpdateProductUseCaseRequest): Promise<UpdateProductUseCaseResponse> {
+		const productExists = await this.usersProductsRepository.findByProductId(productId);
+
+		if (!productExists) {
+			throw new ResourceNotFoundError();
+		}
+
 		const product = await this.usersProductsRepository.update(productId, {
 			name,
 			active,

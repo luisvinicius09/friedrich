@@ -1,5 +1,6 @@
 import { UsersClientsRepository } from '@/repositories/interfaces/users-clients-repository';
 import { UserClient } from '@prisma/client';
+import { ResourceNotFoundError } from './errors/resource-not-found-error';
 
 interface UpdateClientUseCaseRequest {
 	clientId: string;
@@ -26,7 +27,7 @@ export class UpdateClientUseCase {
 		const client = await this.usersClientsRepository.findByClientId(clientId);
 
 		if (!client) {
-			throw new Error('Client not found');
+			throw new ResourceNotFoundError();
 		}
 
 		const userClient = await this.usersClientsRepository.update(clientId, {
