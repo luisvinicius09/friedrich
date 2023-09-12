@@ -49,6 +49,7 @@ model UserClient {
   user        User     @relation(fields: [userId], references: [id])
   name        String
   document    String
+  email       String
   phoneNumber Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())

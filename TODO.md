@@ -3,7 +3,7 @@ An app related to finance and stuff
 Functional Logic
 
 - [x] Should be able to register
-- [ ] Should be able to authenticate
+- [x] Should be able to authenticate
 - [x] Should be able to update some of it's personal information
 - [x] Should be able to fill it's personal address
 - [ ]
@@ -34,7 +34,7 @@ Non Functional Logic
 
 - [x] The user password should be encrypted
 - [x] All records will be stored in a PostgreSQL database
-- [ ] User will be identified by JWT on requests
+- [x] User will be identified by JWT on requests
 - [ ]
 - [ ]
 - [ ]
@@ -54,4 +54,5 @@ Fixes
 - [ ] 
 
 Temporary todos
-- [ ] Add email column to user clients
+- [x] Add email column to user clients
+- [ ]
