@@ -7,11 +7,13 @@ Functional Logic
 - [x] Should be able to update some of it's personal information
 - [x] Should be able to fill it's personal address
 - [ ]
+- [x] Should be able to get information of a specific client
 - [x] Should be able to create clients
 - [x] Should be able to update a client
 - [ ] Should be able to delete a client
-- [ ] Should be able to bill clients
-- [ ] Should be able to access a bill history
+- [ ] Should be able to charge clients
+- [ ] Should be able to access a charge history
+- [x] Should be able to get information of a specific product/service
 - [x] Should be able to create products/services
 - [x] Should be able to update products/services
 - [x] Should be able to delete products/services
@@ -48,11 +50,13 @@ Questions
 - [ ]
 
 Fixes
+
 - [ ] Need to fix prisma schema file: adding cascade actions
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ]
+- [ ]
+- [ ]
 
 Temporary todos
+
 - [x] Add email column to user clients
 - [ ]
