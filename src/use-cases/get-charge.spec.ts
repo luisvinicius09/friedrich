@@ -35,7 +35,7 @@ describe('Get charge use case', () => {
 
 		const { charge } = await sut.execute({ chargeId: chargeCreated.id });
 
-		expect(charge.id).toBe(expect.any(String));
+		expect(charge.id).toEqual(expect.any(String));
 		expect(charge.status).toEqual(ChargeStatus.PENDING);
 	});
 });

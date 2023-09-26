@@ -12,7 +12,7 @@ Functional Logic
 - [x] Should be able to update a client
 - [ ] Should be able to delete a client
 - [x] Should be able to create a charge
-- [ ] Should be able to get information from a specific charge
+- [x] Should be able to get information from a specific charge
 - [ ] Should be able to cancel a specific charge
 - [ ] Should be able to access a charge history
 - [x] Should be able to get information of a specific product/service
