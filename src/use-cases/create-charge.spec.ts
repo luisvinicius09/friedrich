@@ -41,6 +41,8 @@ describe('Create charge use case', () => {
 		const { charge } = await sut.execute({
 			userClientId: userClient.id,
 			userId: user.id,
+			userProductId: null,
+			checkoutId: null,
 		});
 
 		expect(charge.id).toEqual(expect.any(String));

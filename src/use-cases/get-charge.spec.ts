@@ -31,6 +31,8 @@ describe('Get charge use case', () => {
 		const chargeCreated = await chargesRepository.create({
 			userId: user.id,
 			userClientId: userClient.id,
+			userProductId: null,
+			checkoutId: null,
 		});
 
 		const { charge } = await sut.execute({ chargeId: chargeCreated.id });

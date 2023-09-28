@@ -9,16 +9,20 @@ export class InMemoryChargesRepository implements ChargesRepository {
 	async create(data: Prisma.ChargeCreateManyInput) {
 		const chargeSchema = z.object({
 			userId: z.string(),
-			userClientId: z.string(),
+			userClientId: z.string().nullable(),
+			userProductId: z.string().nullable(),
+			checkoutId: z.string().nullable(),
 		});
 
-		const { userId, userClientId } = chargeSchema.parse(data);
+		const { userId, userClientId, userProductId, checkoutId } = chargeSchema.parse(data);
 
 		const charge = {
 			id: randomUUID(),
 			userId,
 			userClientId,
+			userProductId,
 			status: ChargeStatus.PENDING,
+			checkoutId: checkoutId,
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		};
@@ -32,16 +36,21 @@ export class InMemoryChargesRepository implements ChargesRepository {
 		const chargeSchema = z.object({
 			id: z.string(),
 			userId: z.string(),
-			userClientId: z.string(),
+			userClientId: z.string().nullable(),
+			userProductId: z.string().nullable(),
+			checkoutId: z.string().nullable(),
 		});
 
-		const { id, userId, userClientId } = chargeSchema.parse(data);
+		const { id, userId, userClientId, userProductId, checkoutId } =
+			chargeSchema.parse(data);
 
 		const charge = {
 			id,
 			userId,
 			userClientId,
+			userProductId,
 			status: ChargeStatus.PENDING,
+			checkoutId: checkoutId,
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		};
