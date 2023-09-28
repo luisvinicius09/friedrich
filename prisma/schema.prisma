@@ -26,6 +26,7 @@ model User {
   UserClient  UserClient[]
   UserProduct UserProduct[]
   Charge      Charge[]
+  Checkout    Checkout[]
 
   @@map("users")
 }
@@ -96,6 +97,7 @@ model Charge {
   userId        String
   userClientId  String?
   userProductId String?
+  checkoutId    String?
   status        ChargeStatus @default(PENDING)
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @default(now())
@@ -103,6 +105,7 @@ model Charge {
   user        User         @relation(fields: [userId], references: [id])
   userClient  UserClient?  @relation(fields: [userClientId], references: [id])
   userProduct UserProduct? @relation(fields: [userProductId], references: [id])
+  Checkout    Checkout?
 }
 
 // model ChargeInformation {
@@ -118,3 +121,13 @@ model Charge {
 
 // charge Charge @relation(fields: [chargeId], references: [id])
 // }
+
+model Checkout {
+  id       String @id @default(uuid())
+  chargeId String @unique
+  userId   String
+  slug     String @default(uuid())
+
+  charge Charge @relation(fields: [chargeId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+}
