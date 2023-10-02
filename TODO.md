@@ -63,7 +63,7 @@ Fixes
 Temporary todos
 
 - [x] Add email column to user clients
-- [ ]
+- [ ] Code list clients/products handlers(controllers);
 
 
 Payment process break down
