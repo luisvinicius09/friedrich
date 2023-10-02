@@ -1,7 +1,7 @@
 import { UsersClientsRepository } from '@/repositories/interfaces/users-clients-repository';
 import { UserClient } from '@prisma/client';
 
-export async function createUserClient(
+export async function _unit_createUserClient(
 	userId: string,
 	usersClientsRepository: UsersClientsRepository,
 ): Promise<UserClient> {

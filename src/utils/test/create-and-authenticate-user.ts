@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import request from 'supertest';
 
-export async function createAndAuthenticateUser(app: FastifyInstance) {
+export async function _e2e_createAndAuthenticateUser(app: FastifyInstance) {
 	const user = {
 		name: 'Joe Doe',
 		password: 'joe-doe-pw',

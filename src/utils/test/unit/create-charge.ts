@@ -7,7 +7,7 @@ interface CreateChargeOptions {
 	userProductId?: string | null;
 }
 
-export async function createCharge(
+export async function _unit_createCharge(
 	userId: string,
 	chargesRepository: ChargesRepository,
 	{ checkoutId = null, userClientId = null, userProductId = null }: CreateChargeOptions,
