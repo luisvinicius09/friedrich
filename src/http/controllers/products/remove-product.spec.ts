@@ -1,5 +1,5 @@
 import { app } from '@/app';
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
+import { _e2e_createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { randomUUID } from 'crypto';
@@ -10,7 +10,7 @@ describe('Remove product E2E', () => {
 	beforeAll(async () => {
 		await app.ready();
 
-		userToken = await createAndAuthenticateUser(app);
+		userToken = await _e2e_createAndAuthenticateUser(app);
 	});
 
 	afterAll(async () => {

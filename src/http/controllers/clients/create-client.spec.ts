@@ -1,7 +1,7 @@
 import { app } from '@/app';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
+import { _e2e_createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
 
 let userToken: string;
 
@@ -9,7 +9,7 @@ describe('Create Client E2E', () => {
 	beforeAll(async () => {
 		await app.ready();
 
-		userToken = await createAndAuthenticateUser(app);
+		userToken = await _e2e_createAndAuthenticateUser(app);
 	});
 
 	afterAll(async () => {
@@ -19,7 +19,7 @@ describe('Create Client E2E', () => {
 	it('should create a client', async () => {
 		const response = await request(app.server)
 			.post('/client/create')
-			.set('Authorization', `Bearer ${userToken}`)
+			.set({ Authorization: `Bearer ${userToken}` })
 			.send({
 				name: 'Client 1',
 				document: '123456789',
