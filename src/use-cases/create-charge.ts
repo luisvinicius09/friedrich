@@ -5,7 +5,7 @@ interface CreateChargeUseCaseRequest {
 	userId: string;
 	userClientId: string;
 	userProductId: string | null;
-	checkoutId: string | null;
+	checkoutId?: string | null;
 }
 
 interface CreateChargeUseCaseResponse {

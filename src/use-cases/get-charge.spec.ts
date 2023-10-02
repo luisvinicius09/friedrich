@@ -6,8 +6,8 @@ import { ChargesRepository } from '@/repositories/interfaces/charges-repository'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
 import { InMemoryUsersClientsRepository } from '@/repositories/in-memory/in-memory-users-clients-repository';
 import { InMemoryChargesRepository } from '@/repositories/in-memory/in-memory-charges-repository';
-import { createUser } from '@/utils/test/unit/create-user';
-import { createUserClient } from '@/utils/test/unit/create-user-client';
+import { _unit_createUser } from '@/utils/test/unit/create-user';
+import { _unit_createUserClient } from '@/utils/test/unit/create-user-client';
 import { ChargeStatus } from '@prisma/client';
 
 let usersRepository: UsersRepository;
@@ -24,9 +24,9 @@ describe('Get charge use case', () => {
 	});
 
 	it('should retrive a charge correctly', async () => {
-		const user = await createUser(usersRepository);
+		const user = await _unit_createUser(usersRepository);
 
-		const userClient = await createUserClient(user.id, usersClientsRepository);
+		const userClient = await _unit_createUserClient(user.id, usersClientsRepository);
 
 		const chargeCreated = await chargesRepository.create({
 			userId: user.id,

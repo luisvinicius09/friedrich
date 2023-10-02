@@ -2,9 +2,9 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { CreateCheckoutUseCase } from './create-checkout';
 import { CheckoutsRepository } from '@/repositories/interfaces/checkouts-repository';
 import { InMemoryCheckoutsRepository } from '@/repositories/in-memory/in-memory-checkouts-repository';
-import { createUser } from '@/utils/test/unit/create-user';
+import { _unit_createUser } from '@/utils/test/unit/create-user';
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
-import { createCharge } from '@/utils/test/unit/create-charge';
+import { _unit_createCharge } from '@/utils/test/unit/create-charge';
 import { ChargesRepository } from '@/repositories/interfaces/charges-repository';
 import { InMemoryChargesRepository } from '@/repositories/in-memory/in-memory-charges-repository';
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
@@ -23,9 +23,9 @@ describe('Create checkout use case', () => {
 	});
 
 	it('should create a checkout correctly', async () => {
-		const user = await createUser(usersRepository);
+		const user = await _unit_createUser(usersRepository);
 
-		const charge = await createCharge(user.id, chargesRepository, {});
+		const charge = await _unit_createCharge(user.id, chargesRepository, {});
 
 		const { checkout } = await sut.execute({
 			userId: user.id,
