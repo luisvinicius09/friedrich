@@ -3,7 +3,8 @@ import { Checkout } from '@prisma/client';
 import { ResourceNotFoundError } from './errors/resource-not-found-error';
 
 interface GetCheckoutUseCaseRequest {
-	checkoutId: string;
+	slug?: string;
+	checkoutId?: string;
 }
 
 interface GetCheckoutUseCaseResponse {
@@ -15,8 +16,17 @@ export class GetCheckoutUseCase {
 
 	async execute({
 		checkoutId,
+		slug,
 	}: GetCheckoutUseCaseRequest): Promise<GetCheckoutUseCaseResponse> {
-		const checkout = await this.checkoutsRepository.findByCheckoutId(checkoutId);
+		let checkout: Checkout | null = null;
+
+		if (checkoutId) {
+			checkout = await this.checkoutsRepository.findByCheckoutId(checkoutId);
+		}
+
+		if (slug) {
+			checkout = await this.checkoutsRepository.findBySlug(slug);
+		}
 
 		if (!checkout) {
 			throw new ResourceNotFoundError();

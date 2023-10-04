@@ -8,4 +8,6 @@ export interface CheckoutsRepository {
 	findByCheckoutId(checkoutId: string): Promise<Checkout | null>;
 
 	findByChargeId(chargeId: string): Promise<Checkout | null>;
+
+	findBySlug(slug: string): Promise<Checkout | null>;
 }

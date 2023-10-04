@@ -47,4 +47,12 @@ export class InMemoryCheckoutsRepository implements CheckoutsRepository {
 
 		return this.checkouts[checkoutIdx] ?? null;
 	}
+
+	async findBySlug(slug: string) {
+		const checkoutIdx = this.checkouts.findIndex((checkout) => {
+			checkout.slug === slug;
+		});
+
+		return this.checkouts[checkoutIdx] ?? null;
+	}
 }

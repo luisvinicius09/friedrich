@@ -34,4 +34,14 @@ export class PrismaCheckoutsRepository implements CheckoutsRepository {
 
 		return checkout;
 	}
+
+	async findBySlug(slug: string) {
+		const checkout = await prisma.checkout.findUnique({
+			where: {
+				slug: slug,
+			},
+		});
+
+		return checkout;
+	}
 }
