@@ -1,7 +1,11 @@
+import { UserClient } from '@prisma/client';
 import { FastifyInstance } from 'fastify';
 import request from 'supertest';
 
-export async function _e2e_createUserClient(app: FastifyInstance, userToken: string) {
+export async function _e2e_createUserClient(
+	app: FastifyInstance,
+	userToken: string,
+): Promise<UserClient> {
 	const clientData = {
 		name: 'Client 1',
 		document: '123456789',

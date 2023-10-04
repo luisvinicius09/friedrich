@@ -3,10 +3,11 @@ import { _e2e_createAndAuthenticateUser } from '@/utils/test/create-and-authenti
 import { _e2e_createUserClient } from '@/utils/test/create-user-client';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
+import { _e2e_createCharge } from '@/utils/test/create-charge';
 
 let userToken: string;
 
-describe('Create charge E2E', () => {
+describe('List charges E2E', () => {
 	beforeAll(async () => {
 		await app.ready();
 
@@ -17,17 +18,18 @@ describe('Create charge E2E', () => {
 		await app.close();
 	});
 
-	it('should create a charge correctly', async () => {
+	it('should list charges correctly', async () => {
 		const client = await _e2e_createUserClient(app, userToken);
 
-		const response = await request(app.server)
-			.post('/charge/create')
-			.set({ Authorization: `Bearer ${userToken}` })
-			.send({
-				userClientId: client.id,
-				userProductId: null,
-			});
+		[...Array(5)].forEach(async () => {
+			await _e2e_createCharge(app, userToken, { userClientId: client.id });
+		});
 
-		expect(response.statusCode).toBe(200);
+		const response = await request(app.server)
+			.get('/charges')
+			.set({ Authorization: `Bearer ${userToken}` })
+			.send();
+
+		expect(response.status).toBe(200);
 	});
 });

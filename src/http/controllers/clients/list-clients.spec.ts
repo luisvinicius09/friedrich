@@ -6,7 +6,7 @@ import request from 'supertest';
 
 let userToken: string;
 
-describe('Create charge E2E', () => {
+describe('List clients E2E', () => {
 	beforeAll(async () => {
 		await app.ready();
 
@@ -17,17 +17,16 @@ describe('Create charge E2E', () => {
 		await app.close();
 	});
 
-	it('should create a charge correctly', async () => {
-		const client = await _e2e_createUserClient(app, userToken);
+	it('should list clients correctly', async () => {
+		[...Array(5)].forEach(async () => {
+			await _e2e_createUserClient(app, userToken);
+		});
 
 		const response = await request(app.server)
-			.post('/charge/create')
+			.get('/clients')
 			.set({ Authorization: `Bearer ${userToken}` })
-			.send({
-				userClientId: client.id,
-				userProductId: null,
-			});
+			.send();
 
-		expect(response.statusCode).toBe(200);
+		expect(response.status).toBe(200);
 	});
 });
