@@ -63,7 +63,7 @@ Fixes
 Temporary todos
 
 - [x] Add email column to user clients
-- [ ] Code list clients/products handlers(controllers);
+- [x] Code list clients/products handlers(controllers);
 
 
 Payment process break down
@@ -72,7 +72,7 @@ Payment process break down
 3. backend receives request information
 4. backend creates a new charge
 4.5. backend generates a checkout slug that can point to charge information
-4.5. backend will shoot notifications towards client
+4.5. backend will shoot notifications towards client --> later
 5. client can access checkout through its slug and proceed to pay
 6. if client chose billet, request will be sent to backend -> backend will call wepayements, generate a billet and send it back to client
 6. if client chose pix, request will be sent to backend -> backend will call wepayements, generate a pix and send it back to client
