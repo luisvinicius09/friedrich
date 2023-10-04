@@ -2,10 +2,22 @@ import { CheckoutsRepository } from '@/repositories/interfaces/checkouts-reposit
 import { Checkout } from '@prisma/client';
 import { ResourceNotFoundError } from './errors/resource-not-found-error';
 
-interface GetCheckoutUseCaseRequest {
-	slug?: string;
-	checkoutId?: string;
+interface GetCheckoutWithSlug {
+	slug: string;
+	checkoutId?: never;
 }
+
+interface GetCheckoutWithCheckoutId {
+	slug?: never;
+	checkoutId: string;
+}
+
+type GetCheckoutUseCaseRequest = GetCheckoutWithSlug | GetCheckoutWithCheckoutId;
+
+// interface GetCheckoutUseCaseRequest {
+// 	slug?: string;
+// 	checkoutId?: string;
+// }
 
 interface GetCheckoutUseCaseResponse {
 	checkout: Checkout;
