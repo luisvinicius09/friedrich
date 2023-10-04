@@ -128,7 +128,7 @@ model Checkout {
   id        String   @id @default(uuid())
   chargeId  String   @unique
   userId    String
-  slug      String   @default(uuid())
+  slug      String   @unique @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
