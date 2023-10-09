@@ -7,6 +7,7 @@ import { usersRoutes } from './http/controllers/users/routes';
 import { productsRoutes } from './http/controllers/products/routes';
 import { clientsRoutes } from './http/controllers/clients/routes';
 import { chargesRoutes } from './http/controllers/charges/routes';
+import { checkoutsRoutes } from './http/controllers/checkout/routes';
 
 export const app: FastifyInstance = fastify({});
 
@@ -16,6 +17,7 @@ app.register(usersRoutes);
 app.register(productsRoutes);
 app.register(clientsRoutes);
 app.register(chargesRoutes);
+app.register(checkoutsRoutes);
 
 app.setErrorHandler((error, _req, reply) => {
 	if (error instanceof ZodError) {

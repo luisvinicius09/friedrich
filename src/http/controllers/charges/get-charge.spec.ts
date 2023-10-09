@@ -1,6 +1,6 @@
 import { app } from '@/app';
 import { _e2e_createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
-import { _e2e_createCharge } from '@/utils/test/create-charge';
+import { _e2e_createChargeAndCheckout } from '@/utils/test/create-charge-and-checkout';
 import { _e2e_createUserClient } from '@/utils/test/create-user-client';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
@@ -21,7 +21,7 @@ describe('Get charge E2E', () => {
 	it('should get a specific charge correctly', async () => {
 		const client = await _e2e_createUserClient(app, userToken);
 
-		const charge = await _e2e_createCharge(app, userToken, {
+		const { charge } = await _e2e_createChargeAndCheckout(app, userToken, {
 			userClientId: client.id,
 		});
 

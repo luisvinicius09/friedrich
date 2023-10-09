@@ -1,13 +1,13 @@
+import request from 'supertest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { app } from '@/app';
 import { _e2e_createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
-import { _e2e_createUserClient } from '@/utils/test/create-user-client';
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import request from 'supertest';
 import { _e2e_createChargeAndCheckout } from '@/utils/test/create-charge-and-checkout';
+import { _e2e_createUserClient } from '@/utils/test/create-user-client';
 
 let userToken: string;
 
-describe('List charges E2E', () => {
+describe('Get checkout E2E', () => {
 	beforeAll(async () => {
 		await app.ready();
 
@@ -18,15 +18,15 @@ describe('List charges E2E', () => {
 		await app.close();
 	});
 
-	it('should list charges correctly', async () => {
+	it('should get a specific checkout by slug', async () => {
 		const client = await _e2e_createUserClient(app, userToken);
 
-		[...Array(5)].forEach(async () => {
-			await _e2e_createChargeAndCheckout(app, userToken, { userClientId: client.id });
+		const { checkout } = await _e2e_createChargeAndCheckout(app, userToken, {
+			userClientId: client.id,
 		});
 
 		const response = await request(app.server)
-			.get('/charges')
+			.get(`/checkout/${checkout.slug}`)
 			.set({ Authorization: `Bearer ${userToken}` })
 			.send();
 
