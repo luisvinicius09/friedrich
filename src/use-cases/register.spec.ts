@@ -19,6 +19,7 @@ describe('Register Use Case', () => {
 			name: 'Joe Doe',
 			password: 'joe-doe-pw',
 			document: '12345678919',
+			documentType: 'CPF',
 			phoneNumber: 1234567890,
 		});
 
@@ -33,6 +34,7 @@ describe('Register Use Case', () => {
 			name: 'Joe Doe',
 			password: 'joe-doe-pw',
 			document: '12345678919',
+			documentType: 'CPF',
 			phoneNumber: 1234567890,
 		});
 
@@ -46,6 +48,7 @@ describe('Register Use Case', () => {
 			name: 'Joe Doe',
 			password: 'joe-doe-pw',
 			document: '12345678919',
+			documentType: 'CPF',
 			phoneNumber: 1234567890,
 		});
 
@@ -55,6 +58,7 @@ describe('Register Use Case', () => {
 				name: 'Joe Doe 2',
 				password: 'joe-doe-pw',
 				document: '12345678919',
+				documentType: 'CPF',
 				phoneNumber: 1234567890,
 			}),
 		).rejects.toBeInstanceOf(UserAlreadyExistsError);

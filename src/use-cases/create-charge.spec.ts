@@ -7,6 +7,8 @@ import { UsersClientsRepository } from '@/repositories/interfaces/users-clients-
 import { InMemoryUsersClientsRepository } from '@/repositories/in-memory/in-memory-users-clients-repository';
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
 import { ChargeStatus } from '@prisma/client';
+import { _unit_createUser } from '@/utils/test/unit/create-user';
+import { _unit_createUserClient } from '@/utils/test/unit/create-user-client';
 
 let usersRepository: UsersRepository;
 let usersClientsRepository: UsersClientsRepository;
@@ -22,21 +24,9 @@ describe('Create charge use case', () => {
 	});
 
 	it('should create a charge correctly', async () => {
-		const user = await usersRepository.create({
-			document: '123456789',
-			email: 'john-doe@email.com',
-			name: 'John Doe',
-			password: 'john-doe-pw',
-			phoneNumber: 123456789,
-		});
+		const user = await _unit_createUser(usersRepository);
 
-		const userClient = await usersClientsRepository.create({
-			document: '123456789',
-			name: 'John Doe',
-			phoneNumber: 123456789,
-			userId: user.id,
-			email: 'john@email.com',
-		});
+		const userClient = await _unit_createUserClient(user.id, usersClientsRepository);
 
 		const { charge } = await sut.execute({
 			userClientId: userClient.id,

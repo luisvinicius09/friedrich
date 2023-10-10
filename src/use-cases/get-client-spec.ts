@@ -5,6 +5,8 @@ import { UsersClientsRepository } from '@/repositories/interfaces/users-clients-
 import { InMemoryUsersClientsRepository } from '@/repositories/in-memory/in-memory-users-clients-repository';
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
+import { _unit_createUser } from '@/utils/test/unit/create-user';
+import { _unit_createUserClient } from '@/utils/test/unit/create-user-client';
 
 let usersRepository: UsersRepository;
 let usersClientsRepository: UsersClientsRepository;
@@ -18,21 +20,9 @@ describe('Get client use case', () => {
 	});
 
 	it('should get client correctly', async () => {
-		const user = await usersRepository.create({
-			document: '123456789',
-			email: 'john-doe@email.com',
-			name: 'John Doe',
-			password: 'john-doe-pw',
-			phoneNumber: 123456789,
-		});
+		const user = await _unit_createUser(usersRepository);
 
-		const clientCreated = await usersClientsRepository.create({
-			userId: user.id,
-			document: '123456789',
-			email: 'client@email.com',
-			name: 'Client 1',
-			phoneNumber: 123456789,
-		});
+		const clientCreated = await _unit_createUserClient(user.id, usersClientsRepository);
 
 		const { client } = await sut.execute({ clientId: clientCreated.id });
 

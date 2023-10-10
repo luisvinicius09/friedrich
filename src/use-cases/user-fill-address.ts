@@ -4,9 +4,12 @@ import { UserAddress } from '@prisma/client';
 interface UserFillAddressUseCaseRequest {
 	street: string;
 	number: string;
-	neighborhood: string;
 	complement: string | null;
 	userId: string;
+	city: string;
+	district: string;
+	stateCode: string;
+	zipCode: string;
 }
 
 interface UserFillAddressUseCaseResponse {
@@ -19,14 +22,20 @@ export class UserFillAddressUseCase {
 	async execute({
 		street,
 		number,
-		neighborhood,
+		city,
+		district,
+		stateCode,
+		zipCode,
 		complement,
 		userId,
 	}: UserFillAddressUseCaseRequest): Promise<UserFillAddressUseCaseResponse> {
 		const userAddress = await this.usersAddressesRepository.create({
 			street,
 			number,
-			neighborhood,
+			city,
+			district,
+			stateCode,
+			zipCode,
 			complement,
 			userId,
 		});

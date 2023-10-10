@@ -7,6 +7,7 @@ export async function _unit_createUserClient(
 ): Promise<UserClient> {
 	const userClient = await usersClientsRepository.create({
 		document: '123456789',
+		documentType: 'CPF',
 		name: 'John Doe',
 		phoneNumber: 123456789,
 		userId: userId,

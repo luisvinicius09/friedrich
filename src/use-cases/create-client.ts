@@ -5,6 +5,7 @@ interface CreateClientUseCaseRequest {
 	userId: string;
 	name: string;
 	document: string;
+	documentType: 'CPF' | 'CNPJ';
 	phoneNumber: number;
 	email: string;
 }
@@ -20,6 +21,7 @@ export class CreateClientUseCase {
 		userId,
 		name,
 		document,
+		documentType,
 		phoneNumber,
 		email,
 	}: CreateClientUseCaseRequest): Promise<CreateClientUseCaseResponse> {
@@ -27,6 +29,7 @@ export class CreateClientUseCase {
 			userId: userId,
 			name: name,
 			document: document,
+			documentType: documentType,
 			phoneNumber: phoneNumber,
 			email,
 		});

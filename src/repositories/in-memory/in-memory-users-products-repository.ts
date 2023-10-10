@@ -6,16 +6,16 @@ import { randomUUID } from 'crypto';
 export class InMemoryUsersProductsRepository implements UsersProductsRepository {
 	public usersProducts: UserProduct[] = [];
 
+	private userProductSchema = z.object({
+		name: z.string(),
+		value: z.number(),
+		fixedValue: z.boolean(),
+		active: z.boolean(),
+		userId: z.string(),
+	});
 	async create(data: Prisma.UserProductUncheckedCreateInput) {
-		const userProductSchema = z.object({
-			name: z.string(),
-			value: z.number(),
-			fixedValue: z.boolean(),
-			active: z.boolean(),
-			userId: z.string(),
-		});
 
-		const { active, fixedValue, name, value, userId } = userProductSchema.parse(data);
+		const { active, fixedValue, name, value, userId } = this.userProductSchema.parse(data);
 
 		const userProduct = {
 			id: randomUUID(),

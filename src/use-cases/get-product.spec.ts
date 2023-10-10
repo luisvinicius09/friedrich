@@ -4,6 +4,7 @@ import { UsersProductsRepository } from '@/repositories/interfaces/users-product
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { GetProductUseCase } from './get-product';
+import { _unit_createUser } from '@/utils/test/unit/create-user';
 
 let usersRepository: UsersRepository;
 let usersProductsRepository: UsersProductsRepository;
@@ -17,13 +18,7 @@ describe('Get product use case', () => {
 	});
 
 	it('should get product correctly', async () => {
-		const user = await usersRepository.create({
-			document: '123456789',
-			email: 'john-doe@email.com',
-			name: 'John Doe',
-			password: 'john-doe-pw',
-			phoneNumber: 123456789,
-		});
+		const user = await _unit_createUser(usersRepository);
 
 		const productCreated = await usersProductsRepository.create({
 			active: true,

@@ -2,6 +2,7 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-user
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { UserUpdateInfoUseCase } from './user-update-info';
+import { _unit_createUser } from '@/utils/test/unit/create-user';
 
 let usersRepository: UsersRepository;
 let sut: UserUpdateInfoUseCase;
@@ -13,13 +14,7 @@ describe('User update info use case', () => {
 	});
 
 	it('should update user information correctly', async () => {
-		const user = await usersRepository.create({
-			document: '12345678',
-			email: 'joe-doe@email.com',
-			name: 'Joe Doe',
-			password: 'joe-doe-pw',
-			phoneNumber: 123456789,
-		});
+		const user = await _unit_createUser(usersRepository);
 
 		const { user: updatedUser } = await sut.execute({
 			userId: user.id,

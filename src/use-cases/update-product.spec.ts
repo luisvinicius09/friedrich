@@ -4,6 +4,7 @@ import { UsersProductsRepository } from '@/repositories/interfaces/users-product
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { UpdateProductUseCase } from './update-product';
+import { _unit_createUser } from '@/utils/test/unit/create-user';
 
 let usersRepository: UsersRepository;
 let usersProductsRepositories: UsersProductsRepository;
@@ -17,13 +18,7 @@ describe('Update product use case', () => {
 	});
 
 	it('should update the product correctly', async () => {
-		const user = await usersRepository.create({
-			name: 'John Doe',
-			document: '123456789',
-			email: 'john-doe@gmail.com',
-			password: 'jow-doe-pw',
-			phoneNumber: 12345678,
-		});
+		const user = await _unit_createUser(usersRepository);
 
 		const productCreated = await usersProductsRepositories.create({
 			active: true,

@@ -4,6 +4,7 @@ import { UsersRepository } from '@/repositories/interfaces/users-repository';
 import { UsersProductsRepository } from '@/repositories/interfaces/users-products-repository';
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
 import { InMemoryUsersProductsRepository } from '@/repositories/in-memory/in-memory-users-products-repository';
+import { _unit_createUser } from '@/utils/test/unit/create-user';
 
 let usersRepository: UsersRepository;
 let usersProductsRepository: UsersProductsRepository;
@@ -17,13 +18,7 @@ describe('Create product use case', () => {
 	});
 
 	it('should create a product correctly', async () => {
-		const user = await usersRepository.create({
-			document: '123456789',
-			email: 'john-doe@email.com',
-			name: 'John Doe',
-			password: 'john-doe-pw',
-			phoneNumber: 123456789,
-		});
+		const user = await _unit_createUser(usersRepository);
 
 		const { userProduct } = await sut.execute({
 			active: true,

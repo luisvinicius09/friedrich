@@ -6,15 +6,20 @@ import { randomUUID } from 'crypto';
 export class InMemoryChargesRepository implements ChargesRepository {
 	private charges: Charge[] = [];
 
-	async create(data: Prisma.ChargeCreateManyInput) {
-		const chargeSchema = z.object({
-			userId: z.string(),
-			userClientId: z.string().nullable(),
-			userProductId: z.string().nullable(),
-			checkoutId: z.string().nullable(),
-		});
+	private chargeSchema = z.object({
+		userId: z.string(),
+		userClientId: z.string().nullable(),
+		userProductId: z.string().nullable(),
+		checkoutId: z.string().nullable(),
+	});
 
-		const { userId, userClientId, userProductId, checkoutId } = chargeSchema.parse(data);
+	private updateChargeSchema = this.chargeSchema.extend({
+		id: z.string(),
+	});
+
+	async create(data: Prisma.ChargeCreateManyInput) {
+		const { userId, userClientId, userProductId, checkoutId } =
+			this.chargeSchema.parse(data);
 
 		const charge = {
 			id: randomUUID(),
@@ -33,16 +38,8 @@ export class InMemoryChargesRepository implements ChargesRepository {
 	}
 
 	async update(chargeId: string, data: Prisma.ChargeUpdateWithoutUserInput) {
-		const chargeSchema = z.object({
-			id: z.string(),
-			userId: z.string(),
-			userClientId: z.string().nullable(),
-			userProductId: z.string().nullable(),
-			checkoutId: z.string().nullable(),
-		});
-
 		const { id, userId, userClientId, userProductId, checkoutId } =
-			chargeSchema.parse(data);
+			this.updateChargeSchema.parse(data);
 
 		const charge = {
 			id,

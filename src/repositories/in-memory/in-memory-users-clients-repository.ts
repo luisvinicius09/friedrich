@@ -6,27 +6,30 @@ import { randomUUID } from 'node:crypto';
 export class InMemoryUsersClientsRepository implements UsersClientsRepository {
 	public usersClients: UserClient[] = [];
 
-	async create(data: Prisma.UserClientUncheckedCreateInput) {
-		const clientSchema = z.object({
-			userId: z.string(),
-			name: z.string(),
-			document: z.string(),
-			phoneNumber: z.number(),
-			email: z.string().email(),
-		});
+	private clientSchema = z.object({
+		userId: z.string(),
+		name: z.string(),
+		documentType: z.enum(['CPF', 'CNPJ']),
+		document: z.string(),
+		phoneNumber: z.number(),
+		email: z.string().email(),
+	});
 
-		const { userId, name, document, phoneNumber, email } = clientSchema.parse(data);
+	async create(data: Prisma.UserClientUncheckedCreateInput) {
+		const { userId, documentType, name, document, phoneNumber, email } =
+			this.clientSchema.parse(data);
 
 		const userClient = {
 			id: data.id ?? randomUUID(),
 			userId: userId,
 			name: name,
+			documentType: documentType,
 			document: document,
 			phoneNumber: phoneNumber,
 			email: email,
 			createdAt: new Date(),
 			updatedAt: new Date(),
-		};
+		} satisfies UserClient;
 
 		this.usersClients.push(userClient);
 

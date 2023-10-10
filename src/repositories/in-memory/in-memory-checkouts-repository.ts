@@ -6,13 +6,13 @@ import { randomUUID } from 'node:crypto';
 export class InMemoryCheckoutsRepository implements CheckoutsRepository {
 	private checkouts: Checkout[] = [];
 
-	async create(data: Prisma.CheckoutCreateManyInput) {
-		const checkoutSchema = z.object({
-			userId: z.string(),
-			chargeId: z.string(),
-		});
+	private checkoutSchema = z.object({
+		userId: z.string(),
+		chargeId: z.string(),
+	});
 
-		const { userId, chargeId } = checkoutSchema.parse(data);
+	async create(data: Prisma.CheckoutCreateManyInput) {
+		const { userId, chargeId } = this.checkoutSchema.parse(data);
 
 		const checkout = {
 			id: randomUUID(),
@@ -21,7 +21,7 @@ export class InMemoryCheckoutsRepository implements CheckoutsRepository {
 			createdAt: new Date(),
 			updatedAt: new Date(),
 			slug: randomUUID(),
-		};
+		} satisfies Checkout;
 
 		this.checkouts.push(checkout);
 

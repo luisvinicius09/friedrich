@@ -6,27 +6,33 @@ import { randomUUID } from 'crypto';
 export class InMemoryUsersAddressesRepository implements UsersAddressesRepository {
 	public usersAddresses: UserAddress[] = [];
 
-	async create(data: Prisma.UserAddressUncheckedCreateInput) {
-		const userAddressSchema = z.object({
-			street: z.string(),
-			number: z.string(),
-			neighborhood: z.string(),
-			complement: z.string().nullable(),
-			userId: z.string(),
-		});
+	private userAddressSchema = z.object({
+		street: z.string(),
+		number: z.string(),
+		city: z.string(),
+		district: z.string(),
+		stateCode: z.string(),
+		zipCode: z.string(),
+		complement: z.string().nullable(),
+		userId: z.string(),
+	});
 
-		const { street, number, neighborhood, complement, userId } =
-			userAddressSchema.parse(data);
+	async create(data: Prisma.UserAddressUncheckedCreateInput) {
+		const { street, number, city, district, stateCode, zipCode, complement, userId } =
+			this.userAddressSchema.parse(data);
 
 		const userAddress = {
 			id: data.id ?? randomUUID(),
 			street: street,
 			number: number,
-			neighborhood: neighborhood,
+			city: city,
+			district: district,
+			stateCode: stateCode,
+			zipCode: zipCode,
 			complement: complement,
 			updatedAt: new Date(),
 			userId: userId,
-		};
+		} satisfies UserAddress;
 
 		this.usersAddresses.push(userAddress);
 

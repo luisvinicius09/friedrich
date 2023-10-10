@@ -4,6 +4,7 @@ import { UsersProductsRepository } from '@/repositories/interfaces/users-product
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { RemoveProductUseCase } from './remove-product';
+import { _unit_createUser } from '@/utils/test/unit/create-user';
 
 let usersRepository: UsersRepository;
 let usersProductsRepository: UsersProductsRepository;
@@ -17,13 +18,7 @@ describe('Remove product use case', () => {
 	});
 
 	it('should remove the product correctly', async () => {
-		const user = await usersRepository.create({
-			name: 'John Doe',
-			email: 'joe-doe@email.com',
-			document: '123456789',
-			password: 'joe-doe-pw',
-			phoneNumber: 123456789,
-		});
+		const user = await _unit_createUser(usersRepository);
 
 		const userProduct = await usersProductsRepository.create({
 			active: true,

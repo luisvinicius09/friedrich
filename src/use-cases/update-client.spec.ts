@@ -4,6 +4,8 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { UsersRepository } from '@/repositories/interfaces/users-repository';
 import { UsersClientsRepository } from '@/repositories/interfaces/users-clients-repository';
 import { UpdateClientUseCase } from './update-client';
+import { _unit_createUser } from '@/utils/test/unit/create-user';
+import { _unit_createUserClient } from '@/utils/test/unit/create-user-client';
 
 let usersRepository: UsersRepository;
 let clientsRepository: UsersClientsRepository;
@@ -17,21 +19,9 @@ describe('Update client use case', () => {
 	});
 
 	it('should update client correctly', async () => {
-		const user = await usersRepository.create({
-			name: 'John Doe',
-			email: 'joe-doe@email.com',
-			document: '123456789',
-			password: 'joe-doe-pw',
-			phoneNumber: 123456789,
-		});
+		const user = await _unit_createUser(usersRepository);
 
-		const clientCreated = await clientsRepository.create({
-			document: '123456789',
-			name: 'John Doe',
-			phoneNumber: 123456789,
-			userId: user.id,
-			email: 'john@email.com',
-		});
+		const clientCreated = await _unit_createUserClient(user.id, clientsRepository);
 
 		expect(clientCreated.name).toEqual('John Doe');
 		expect(clientCreated.phoneNumber).toEqual(123456789);

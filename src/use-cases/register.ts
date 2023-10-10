@@ -7,8 +7,9 @@ interface RegisterUseCaseRequest {
 	email: string;
 	name: string;
 	password: string;
-	document: string,
-	phoneNumber: number,
+	document: string;
+	documentType: 'CPF' | 'CNPJ';
+	phoneNumber: number;
 }
 
 interface RegisterUseCaseResponse {
@@ -16,10 +17,16 @@ interface RegisterUseCaseResponse {
 }
 
 export class RegisterUseCase {
-	constructor(private usersRepository: UsersRepository) { }
+	constructor(private usersRepository: UsersRepository) {}
 
-	async execute({ email, name, password, document, phoneNumber }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
-
+	async execute({
+		email,
+		name,
+		password,
+		document,
+		phoneNumber,
+		documentType,
+	}: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
 		const userWithSameEmail = await this.usersRepository.findByEmail(email);
 
 		if (userWithSameEmail) {
@@ -33,10 +40,10 @@ export class RegisterUseCase {
 			email: email,
 			password: password_hash,
 			document: document,
+			documentType: documentType,
 			phoneNumber: phoneNumber,
 		});
 
 		return { user };
 	}
-
 }

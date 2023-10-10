@@ -18,6 +18,7 @@ describe('Authenticate use case', () => {
 	it('should authenticate the user correctly', async () => {
 		await registerUseCase.execute({
 			document: '123456789',
+			documentType: 'CPF',
 			email: 'joe@email.com',
 			name: 'Joe Doe',
 			password: 'joe-doe-pw',
