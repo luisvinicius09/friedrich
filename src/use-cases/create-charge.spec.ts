@@ -33,6 +33,9 @@ describe('Create charge use case', () => {
 			userId: user.id,
 			userProductId: null,
 			checkoutId: null,
+			amountInCents: 1324,
+			expireDate: new Date(),
+			selectedPaymentTypes: ['CREDIT_CARD', 'BOLETO'],
 		});
 
 		expect(charge.id).toEqual(expect.any(String));

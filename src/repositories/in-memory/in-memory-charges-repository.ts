@@ -1,4 +1,4 @@
-import { Charge, ChargeStatus, Prisma } from '@prisma/client';
+import { Charge, ChargeStatus, PaymentType, Prisma } from '@prisma/client';
 import { ChargesRepository } from '../interfaces/charges-repository';
 import { z } from 'zod';
 import { randomUUID } from 'crypto';
@@ -11,6 +11,11 @@ export class InMemoryChargesRepository implements ChargesRepository {
 		userClientId: z.string().nullable(),
 		userProductId: z.string().nullable(),
 		checkoutId: z.string().nullable(),
+		expireDate: z.date(),
+		amountInCents: z.number().positive(),
+		selectedPaymentTypes: z.array(
+			z.enum([PaymentType.BOLETO, PaymentType.PIX, PaymentType.CREDIT_CARD]),
+		),
 	});
 
 	private updateChargeSchema = this.chargeSchema.extend({
@@ -18,14 +23,24 @@ export class InMemoryChargesRepository implements ChargesRepository {
 	});
 
 	async create(data: Prisma.ChargeCreateManyInput) {
-		const { userId, userClientId, userProductId, checkoutId } =
-			this.chargeSchema.parse(data);
+		const {
+			userId,
+			userClientId,
+			userProductId,
+			checkoutId,
+			expireDate,
+			amountInCents,
+			selectedPaymentTypes,
+		} = this.chargeSchema.parse(data);
 
 		const charge = {
 			id: randomUUID(),
 			userId,
 			userClientId,
 			userProductId,
+			expireDate,
+			amountInCents,
+			selectedPaymentTypes,
 			status: ChargeStatus.PENDING,
 			checkoutId: checkoutId,
 			createdAt: new Date(),
@@ -38,14 +53,25 @@ export class InMemoryChargesRepository implements ChargesRepository {
 	}
 
 	async update(chargeId: string, data: Prisma.ChargeUpdateWithoutUserInput) {
-		const { id, userId, userClientId, userProductId, checkoutId } =
-			this.updateChargeSchema.parse(data);
+		const {
+			id,
+			userId,
+			userClientId,
+			userProductId,
+			checkoutId,
+			expireDate,
+			amountInCents,
+			selectedPaymentTypes,
+		} = this.updateChargeSchema.parse(data);
 
 		const charge = {
 			id,
 			userId,
 			userClientId,
 			userProductId,
+			expireDate,
+			amountInCents,
+			selectedPaymentTypes,
 			status: ChargeStatus.PENDING,
 			checkoutId: checkoutId,
 			createdAt: new Date(),
