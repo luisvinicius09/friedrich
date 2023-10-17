@@ -6,6 +6,7 @@ import {
 	WePaymentsRepository,
 } from './interfaces/wepayments';
 import { z } from 'zod';
+import { env } from '@/env';
 
 export class WePaymentsIntegration implements WePaymentsRepository {
 	private wepaymentsBaseURL = 'https://api.sandbox.wepayout.com.br/v1/payin/payments';
@@ -75,7 +76,7 @@ export class WePaymentsIntegration implements WePaymentsRepository {
 			{
 				headers: {
 					Authorization:
-						'Bearer 3bf5b4f53a1c9314c105dc79be87d61d0eeeec514eb36186cb7bc0a7d55a7d6d',
+						`Bearer ${env.WEPAYMENTS_API_KEY}`,
 				},
 			},
 		);
