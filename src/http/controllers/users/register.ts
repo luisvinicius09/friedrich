@@ -6,7 +6,7 @@ import { z } from 'zod';
 export default async function register(req: FastifyRequest, reply: FastifyReply) {
 	const registerBodySchema = z.object({
 		name: z.string().min(5), // TODO: improve validation
-		document: z.string().min(6), // TODO: improve validation
+		document: z.string().min(11).max(11), // TODO Improve validation to accept CPF and CNPJ
 		documentType: z.enum(['CPF', 'CNPJ']),
 		email: z.string().email(),
 		password: z.string().min(8).max(35),
