@@ -1,7 +1,7 @@
 import { Prisma, UserClientAddress } from '@prisma/client';
 
 export interface UsersClientsAddressesRepository {
-	// create(data: Prisma.UserClientAddressCreateManyInput): Promise<UserClientAddress>;
+	create(data: Prisma.UserClientAddressCreateManyInput): Promise<UserClientAddress>;
 
 	findByClientId(clientId: string): Promise<UserClientAddress | null>;
 

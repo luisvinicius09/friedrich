@@ -5,9 +5,13 @@ import { prisma } from '@/lib/prisma';
 export class PrismaUsersClientsAddressesRepository
 	implements UsersClientsAddressesRepository
 {
-	// async create(data: Prisma.UserClientAddressCreateManyInput) {
-	// 	throw new Error('Method not implemented.');
-	// }
+	async create(data: Prisma.UserClientAddressCreateManyInput) {
+		const address = await prisma.userClientAddress.create({
+			data: data,
+		});
+
+		return address;
+	}
 
 	async findByClientId(clientId: string) {
 		const address = await prisma.userClientAddress.findUnique({
