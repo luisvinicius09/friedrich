@@ -136,20 +136,6 @@ model Charge {
   @@map("charges")
 }
 
-// model ChargeInformation {
-//   id                String  @id @default(uuid())
-//   chargeId          String
-//   value             Int
-//   productName       String?
-//   productValue      Int?
-//   clientName        String
-//   clientEmail       String
-//   clientDocument    String
-//   clientPhoneNumber String
-
-// charge Charge @relation(fields: [chargeId], references: [id])
-// }
-
 model Checkout {
   id        String   @id @default(uuid())
   chargeId  String   @unique
