@@ -6,6 +6,7 @@ const envSchema = z.object({
 	PORT: z.coerce.number().default(3333),
 	JWT_SECRET: z.string(),
 	WEPAYMENTS_API_KEY: z.string(),
+	BASE_URL: z.string().url(),
 });
 
 const _env = envSchema.safeParse(process.env);
