@@ -7,7 +7,7 @@ export interface CreateChargeDTO {
 	buyer: {
 		name: string;
 		documentType: 'CPF' | 'CNPJ';
-		document: string;
+		documentNumber: string;
 		address: {
 			street: string;
 			number: string;

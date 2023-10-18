@@ -21,7 +21,7 @@ export class WePaymentsIntegration implements WePaymentsRepository {
 			buyer: z.object({
 				name: z.string(),
 				documentType: z.enum(['CPF', 'CNPJ']),
-				document: z.string(),
+				documentNumber: z.string(),
 				address: z.object({
 					street: z.string(),
 					number: z.string(),
@@ -44,7 +44,7 @@ export class WePaymentsIntegration implements WePaymentsRepository {
 			`${this.wepaymentsBaseURL}/${chargeType}`,
 			{
 				callbackUrl:
-					'https://0af6-189-90-193-123.ngrok.io/wepayments/handleChargeCallback', // TODO
+					`${env.BASE_URL}/wepayments/handleChargeCallback`, // TODO
 				// customNumber: '1234',
 				title: {
 					expireDate: expireDate, // gotta save this
@@ -54,7 +54,7 @@ export class WePaymentsIntegration implements WePaymentsRepository {
 				buyer: {
 					name: buyer.name,
 					document: {
-						number: buyer.document,
+						number: buyer.documentNumber,
 						type: buyer.documentType,
 					},
 					address: {
