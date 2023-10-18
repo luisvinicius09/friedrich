@@ -6,13 +6,15 @@ export async function createClient(req: FastifyRequest, reply: FastifyReply) {
 	const createClientBodySchema = z.object({
 		name: z.string(),
 		document: z.string(),
+		documentType: z.enum(['CPF', 'CNPJ']),
 		phoneNumber: z.number(),
 		email: z.string().email(),
 	});
 
 	const createClientUseCase = makeCreateClientUseCase();
 
-	const { name, document, phoneNumber, email } = createClientBodySchema.parse(req.body);
+	const { name, document, documentType, phoneNumber, email } =
+		createClientBodySchema.parse(req.body);
 
 	const userId = req.user.sub;
 
@@ -22,6 +24,7 @@ export async function createClient(req: FastifyRequest, reply: FastifyReply) {
 		document,
 		phoneNumber,
 		email,
+		documentType,
 	});
 
 	return reply.status(200).send({ client });

@@ -25,6 +25,7 @@ describe('Create Client E2E', () => {
 				document: '123456789',
 				phoneNumber: 123456789,
 				email: 'client1@hotmail.com',
+				documentType: 'CPF',
 			});
 
 		expect(response.statusCode).toBe(200);
@@ -33,6 +34,7 @@ describe('Create Client E2E', () => {
 				id: expect.any(String),
 				name: 'Client 1',
 				document: '123456789',
+				documentType: 'CPF',
 				phoneNumber: 123456789,
 				email: 'client1@hotmail.com',
 			}),
