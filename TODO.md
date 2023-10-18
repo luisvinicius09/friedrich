@@ -19,7 +19,7 @@ Functional Logic
 - [x] Should be able to create products/services
 - [x] Should be able to update products/services
 - [x] Should be able to delete products/services
-- [ ] Should be able to generate a checkout(generate a link containing information to from the charge)
+- [x] Should be able to generate a checkout(generate a link containing information to from the charge)
 - [ ] Should be able to send information from charge and product based on the checkout slug
 - [ ] Should be able to retrieve user balance information
 - [ ] Should be able update user balance information
