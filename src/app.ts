@@ -8,8 +8,9 @@ import { productsRoutes } from './http/controllers/products/routes';
 import { clientsRoutes } from './http/controllers/clients/routes';
 import { chargesRoutes } from './http/controllers/charges/routes';
 import { checkoutsRoutes } from './http/controllers/checkout/routes';
+import { wePaymentsRoutes } from './http/controllers/wePayments/routes';
 
-export const app: FastifyInstance = fastify({});
+export const app: FastifyInstance = fastify({ logger: true });
 
 app.register(fastifyJwt, { secret: env.JWT_SECRET });
 
@@ -18,6 +19,7 @@ app.register(productsRoutes);
 app.register(clientsRoutes);
 app.register(chargesRoutes);
 app.register(checkoutsRoutes);
+app.register(wePaymentsRoutes);
 
 app.setErrorHandler((error, _req, reply) => {
 	if (error instanceof ZodError) {
