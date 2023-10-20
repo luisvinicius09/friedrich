@@ -16,7 +16,9 @@
 		"eslint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
 		"eslint:fix": "eslint --ignore-path .eslintignore --ext .js,.ts . --fix"
 	},
-	"keywords": [],
+	"prisma": {
+		"seed": "tsx ./prisma/seed.ts"
+	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
