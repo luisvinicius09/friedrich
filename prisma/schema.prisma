@@ -103,10 +103,15 @@ model UserProduct {
   @@map("users-products")
 }
 
-enum ChargeStatus {
-  PENDING
-  PAID
-  REFUNDED
+model ChargeStatus {
+  id          Int      @id @default(autoincrement())
+  statusName  String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  Charge      Charge[]
+
+  @@map("charges-statuses")
 }
 
 enum PaymentType {
@@ -116,17 +121,20 @@ enum PaymentType {
 }
 
 model Charge {
-  id                   String       @id @default(uuid())
-  userId               String
-  userClientId         String?
-  userProductId        String?
-  checkoutId           String?
-  amountInCents        Int
-  expireDate           DateTime
+  id            String   @id @default(uuid())
+  userId        String
+  userClientId  String?
+  userProductId String?
+  checkoutId    String?
+  amountInCents Int
+  expireDate    DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+
+  statusId Int          @default(1)
+  status   ChargeStatus @relation(fields: [statusId], references: [id])
+
   selectedPaymentTypes PaymentType[]
-  status               ChargeStatus @default(PENDING)
-  createdAt            DateTime     @default(now())
-  updatedAt            DateTime     @default(now())
 
   user        User         @relation(fields: [userId], references: [id])
   userClient  UserClient?  @relation(fields: [userClientId], references: [id])
