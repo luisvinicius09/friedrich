@@ -6,7 +6,6 @@ import { UsersRepository } from '@/repositories/interfaces/users-repository';
 import { UsersClientsRepository } from '@/repositories/interfaces/users-clients-repository';
 import { InMemoryUsersClientsRepository } from '@/repositories/in-memory/in-memory-users-clients-repository';
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
-import { ChargeStatus } from '@prisma/client';
 import { _unit_createUser } from '@/utils/test/unit/create-user';
 import { _unit_createUserClient } from '@/utils/test/unit/create-user-client';
 
@@ -39,6 +38,6 @@ describe('Create charge use case', () => {
 		});
 
 		expect(charge.id).toEqual(expect.any(String));
-		expect(charge.status).toEqual(ChargeStatus.PENDING);
+		expect(charge.statusId).toEqual(1);
 	});
 });

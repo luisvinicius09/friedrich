@@ -10,4 +10,6 @@ export interface ChargesRepository {
 	findByChargeId(chargeId: string): Promise<Charge | null>;
 
 	findAllByUserId(userId: string): Promise<Charge[]>;
+
+	updateStatus(chargeId: string, statusId: string): Promise<Charge>;
 }

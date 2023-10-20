@@ -1,4 +1,4 @@
-import { Charge, ChargeStatus, PaymentType, Prisma } from '@prisma/client';
+import { Charge, PaymentType, Prisma } from '@prisma/client';
 import { ChargesRepository } from '../interfaces/charges-repository';
 import { z } from 'zod';
 import { randomUUID } from 'crypto';
@@ -7,6 +7,7 @@ export class InMemoryChargesRepository implements ChargesRepository {
 	private charges: Charge[] = [];
 
 	private chargeSchema = z.object({
+		statusId: z.number().optional(),
 		userId: z.string(),
 		userClientId: z.string().nullable(),
 		userProductId: z.string().nullable(),
@@ -14,7 +15,7 @@ export class InMemoryChargesRepository implements ChargesRepository {
 		expireDate: z.date(),
 		amountInCents: z.number().positive(),
 		selectedPaymentTypes: z.array(
-			z.enum([PaymentType.BOLETO, PaymentType.PIX, PaymentType.CREDIT_CARD]),
+			z.enum([PaymentType.BOLETO, PaymentType.PIX, PaymentType.CREDIT_CARD]).,
 		),
 	});
 
@@ -31,6 +32,7 @@ export class InMemoryChargesRepository implements ChargesRepository {
 			expireDate,
 			amountInCents,
 			selectedPaymentTypes,
+			statusId,
 		} = this.chargeSchema.parse(data);
 
 		const charge = {
@@ -41,11 +43,11 @@ export class InMemoryChargesRepository implements ChargesRepository {
 			expireDate,
 			amountInCents,
 			selectedPaymentTypes,
-			status: ChargeStatus.PENDING,
+			statusId: statusId ?? 1,
 			checkoutId: checkoutId,
 			createdAt: new Date(),
 			updatedAt: new Date(),
-		};
+		} satisfies Charge;
 
 		this.charges.push(charge);
 
@@ -62,6 +64,7 @@ export class InMemoryChargesRepository implements ChargesRepository {
 			expireDate,
 			amountInCents,
 			selectedPaymentTypes,
+			statusId,
 		} = this.updateChargeSchema.parse(data);
 
 		const charge = {
@@ -72,11 +75,11 @@ export class InMemoryChargesRepository implements ChargesRepository {
 			expireDate,
 			amountInCents,
 			selectedPaymentTypes,
-			status: ChargeStatus.PENDING,
+			statusId: statusId ?? 1,
 			checkoutId: checkoutId,
 			createdAt: new Date(),
 			updatedAt: new Date(),
-		};
+		} satisfies Charge;
 
 		this.charges.push(charge);
 
@@ -99,5 +102,9 @@ export class InMemoryChargesRepository implements ChargesRepository {
 		const charges = this.charges.filter((charge) => charge.userId === userId);
 
 		return charges;
+	}
+
+	async updateStatus(chargeId: string, statusId: string) {
+		throw new Error('Method not implemented.');
 	}
 }

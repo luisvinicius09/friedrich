@@ -8,7 +8,7 @@ import { InMemoryUsersClientsRepository } from '@/repositories/in-memory/in-memo
 import { InMemoryChargesRepository } from '@/repositories/in-memory/in-memory-charges-repository';
 import { _unit_createUser } from '@/utils/test/unit/create-user';
 import { _unit_createUserClient } from '@/utils/test/unit/create-user-client';
-import { ChargeStatus } from '@prisma/client';
+import { _unit_createCharge } from '@/utils/test/unit/create-charge';
 
 let usersRepository: UsersRepository;
 let usersClientsRepository: UsersClientsRepository;
@@ -28,16 +28,13 @@ describe('Get charge use case', () => {
 
 		const userClient = await _unit_createUserClient(user.id, usersClientsRepository);
 
-		const chargeCreated = await chargesRepository.create({
-			userId: user.id,
+		const chargeCreated = await _unit_createCharge(user.id, chargesRepository, {
 			userClientId: userClient.id,
-			userProductId: null,
-			checkoutId: null,
 		});
 
 		const { charge } = await sut.execute({ chargeId: chargeCreated.id });
 
 		expect(charge.id).toEqual(expect.any(String));
-		expect(charge.status).toEqual(ChargeStatus.PENDING);
+		expect(charge.statusId).toEqual(1);
 	});
 });

@@ -43,4 +43,8 @@ export class PrismaChargesRepository implements ChargesRepository {
 
 		return charges;
 	}
+
+	async updateStatus(chargeId: string, statusId: string) {
+		throw new Error('Method not implemented.');
+	}
 }

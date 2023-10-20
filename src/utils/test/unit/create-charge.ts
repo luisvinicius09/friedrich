@@ -17,6 +17,10 @@ export async function _unit_createCharge(
 		checkoutId: checkoutId,
 		userClientId: userClientId,
 		userProductId: userProductId,
+		amountInCents: 8451,
+		expireDate: new Date(),
+		statusId: 1,
+		selectedPaymentTypes: ['BOLETO', 'CREDIT_CARD', 'PIX'],
 	});
 
 	return charge;
