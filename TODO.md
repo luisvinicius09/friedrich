@@ -47,8 +47,6 @@ Non Functional Logic
 
 Questions
 
-- [ ] Can a user bill it self?
-- [ ] Does the user clients need to have addresses? Can it be optional?
 - [ ]
 - [ ]
 - [ ]
