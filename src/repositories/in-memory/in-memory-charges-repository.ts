@@ -15,7 +15,7 @@ export class InMemoryChargesRepository implements ChargesRepository {
 		expireDate: z.date(),
 		amountInCents: z.number().positive(),
 		selectedPaymentTypes: z.array(
-			z.enum([PaymentType.BOLETO, PaymentType.PIX, PaymentType.CREDIT_CARD]).,
+			z.enum([PaymentType.BOLETO, PaymentType.PIX, PaymentType.CREDIT_CARD]),
 		),
 	});
 
