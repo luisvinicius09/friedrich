@@ -20,9 +20,10 @@ Functional Logic
 - [x] Should be able to update products/services
 - [x] Should be able to delete products/services
 - [x] Should be able to generate a checkout(generate a link containing information to from the charge)
-- [ ] Should be able to send information from charge and product based on the checkout slug
+- [x] Should be able to send information from charge and product based on the checkout slug
 - [ ] Should be able to retrieve user balance information
 - [ ] Should be able update user balance information
+- [ ] WePayments handle charge callback (webhook handler) should update the charge status
 - [ ]
 
 Business rules
@@ -32,7 +33,7 @@ Business rules
 - [ ] A user doesn't need to fill it's address information
 - [ ] A user will posibly be restricted if address information is not filled
 - [ ] The bill history will not be deleted if the user client or the product is deleted
-- [ ] The user will have access to multiple plans that it can pay for more funcionalities.
+- [ ] The user will have access to multiple plans that it can pay for more funcionalities. ( LATER )
 - [ ] Every user will have a money balance information (money available to withdraw and money on hold)
 - [ ]
 
