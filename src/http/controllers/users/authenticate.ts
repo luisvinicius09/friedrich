@@ -29,6 +29,7 @@ export default async function authenticate(req: FastifyRequest, reply: FastifyRe
 			{
 				sign: {
 					sub: user.id,
+					expiresIn: '1d'
 				},
 			},
 		);
