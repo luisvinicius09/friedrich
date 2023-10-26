@@ -1,5 +1,6 @@
 import fastify, { FastifyInstance } from 'fastify';
 import fastifyJwt from '@fastify/jwt';
+import fastifyCors from '@fastify/cors';
 
 import { ZodError } from 'zod';
 import { env } from './env';
@@ -9,10 +10,43 @@ import { clientsRoutes } from './http/controllers/clients/routes';
 import { chargesRoutes } from './http/controllers/charges/routes';
 import { checkoutsRoutes } from './http/controllers/checkout/routes';
 import { wePaymentsRoutes } from './http/controllers/wePayments/routes';
+// import { format } from 'winston';
 
-export const app: FastifyInstance = fastify({ logger: true });
+// const formatter = format.printf(({ level, message, label, timestamp }) => {
+// 	return `${timestamp} [${label}] ${level}: ${message}`;
+// });
+
+// const options = {
+// 	error: {
+// 		level: 'error',
+// 		format: format.combine(format.timestamp(), formatter),
+// 		handleExeption: true,
+// 		json: true,
+// 		colorize: true,
+// 	},
+// 	info: {
+// 		level: 'info',
+// 		format: format.combine(format.timestamp(), formatter),
+// 		handleExeption: false,
+// 		json: true,
+// 		colorize: true,
+// 	},
+// 	console: {
+// 		format: format.simple(),
+// 		level: 'debug',
+// 		handleException: true,
+// 		json: false,
+// 		colorize: true,
+// 	},
+// };
+
+export const app: FastifyInstance = fastify({
+	logger: true,
+});
 
 app.register(fastifyJwt, { secret: env.JWT_SECRET });
+
+app.register(fastifyCors);
 
 app.register(usersRoutes);
 app.register(productsRoutes);
