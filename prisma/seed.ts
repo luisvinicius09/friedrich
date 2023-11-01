@@ -5,6 +5,12 @@ const prisma = new PrismaClient();
 async function main() {
 	const chargeStatuses = [
 		{
+			id: 0,
+			statusName: 'INITIATED',
+			description: 'The charge and checkout was created.',
+			external_name: '',
+		},
+		{
 			id: 1,
 			statusName: 'CREATED',
 			description: 'The first status when the payin is created.',

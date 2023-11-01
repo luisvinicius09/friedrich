@@ -132,7 +132,7 @@ model Charge {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @default(now())
 
-  statusId Int          @default(1)
+  statusId Int          @default(0)
   status   ChargeStatus @relation(fields: [statusId], references: [id])
 
   selectedPaymentTypes PaymentType[]
