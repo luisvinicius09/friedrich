@@ -104,12 +104,13 @@ model UserProduct {
 }
 
 model ChargeStatus {
-  id          Int      @id @default(autoincrement())
-  statusName  String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
-  Charge      Charge[]
+  id            Int      @id @default(autoincrement())
+  statusName    String
+  description   String?
+  external_name String   @default("")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+  Charge        Charge[]
 
   @@map("charges-statuses")
 }
