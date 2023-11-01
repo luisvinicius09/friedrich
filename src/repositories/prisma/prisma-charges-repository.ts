@@ -44,7 +44,18 @@ export class PrismaChargesRepository implements ChargesRepository {
 		return charges;
 	}
 
-	async updateStatus(chargeId: string, statusId: string) {
-		throw new Error('Method not implemented.');
+	async updateStatus(chargeId: string, statusId: number) {
+		// TODO?: check if statusId exists
+
+		const charge = await prisma.charge.update({
+			where: {
+				id: chargeId,
+			},
+			data: {
+				statusId: statusId,
+			},
+		});
+
+		return charge;
 	}
 }

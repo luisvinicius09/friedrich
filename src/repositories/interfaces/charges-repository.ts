@@ -11,5 +11,5 @@ export interface ChargesRepository {
 
 	findAllByUserId(userId: string): Promise<Charge[]>;
 
-	updateStatus(chargeId: string, statusId: string): Promise<Charge>;
+	updateStatus(chargeId: string, statusId: number): Promise<Charge>;
 }
