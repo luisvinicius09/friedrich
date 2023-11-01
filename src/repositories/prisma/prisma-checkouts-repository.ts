@@ -11,6 +11,17 @@ export class PrismaCheckoutsRepository implements CheckoutsRepository {
 		return checkout;
 	}
 
+	async update(checkoutId: string, data: Prisma.CheckoutUpdateInput) {
+		const checkout = await prisma.checkout.update({
+			where: {
+				id: checkoutId,
+			},
+			data: data,
+		});
+
+		return checkout;
+	}
+
 	// async recreateSlug(checkoutId: string) {
 	// 	throw new Error('Method not implemented');
 	// }

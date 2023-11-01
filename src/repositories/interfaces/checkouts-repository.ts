@@ -3,6 +3,8 @@ import { Checkout, Prisma } from '@prisma/client';
 export interface CheckoutsRepository {
 	create(data: Prisma.CheckoutCreateManyInput): Promise<Checkout>;
 
+	update(checkoutId: string, data: Prisma.CheckoutUpdateInput): Promise<Checkout>;
+
 	// recreateSlug(checkoutId: string): Promise<Checkout>;
 
 	findByCheckoutId(checkoutId: string): Promise<Checkout | null>;
