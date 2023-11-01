@@ -1,6 +1,5 @@
 import { makeCreateChargeUseCase } from '@/use-cases/factories/make-create-charge-use-case';
 import { makeCreateCheckoutUseCase } from '@/use-cases/factories/make-create-checkout-use-case';
-import { makeUpdateChargeUseCase } from '@/use-cases/factories/make-update-charge-use-case';
 import { PaymentType } from '@prisma/client';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
@@ -23,7 +22,6 @@ export async function createCharge(req: FastifyRequest, reply: FastifyReply) {
 
 	const createChargeUseCase = makeCreateChargeUseCase();
 	const createCheckoutUseCase = makeCreateCheckoutUseCase();
-	const updateChargeUseCase = makeUpdateChargeUseCase();
 
 	const { charge } = await createChargeUseCase.execute({
 		userId,
@@ -39,12 +37,5 @@ export async function createCharge(req: FastifyRequest, reply: FastifyReply) {
 		chargeId: charge.id,
 	});
 
-	const chargeUpdated = await updateChargeUseCase.execute({
-		chargeId: charge.id,
-		data: {
-			checkoutId: checkout.id,
-		},
-	});
-
-	return reply.status(200).send({ charge: chargeUpdated, checkout });
+	return reply.status(200).send({ charge, checkout });
 }
