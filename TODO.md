@@ -6,7 +6,6 @@ Functional Logic
 - [x] Should be able to authenticate
 - [x] Should be able to update some of it's personal information
 - [x] Should be able to fill it's personal address
-- [ ]
 - [x] Should be able to get information of a specific client
 - [x] Should be able to create clients
 - [x] Should be able to update a client
@@ -24,7 +23,9 @@ Functional Logic
 - [ ] Should be able to retrieve user balance information
 - [ ] Should be able update user balance information
 - [ ] WePayments handle charge callback (webhook handler) should update the charge status
-- [ ]
+- [ ] Should be able to create a charge with and without a client
+- [ ] If a charge does not have a client, when the client creates a payment it should create a client
+- [ ] 
 
 Business rules
 
