@@ -7,52 +7,44 @@ import { WePaymentsIntegration } from '@/integrations/wepayments-integration';
 import { makeGetCheckoutUseCase } from '@/use-cases/factories/make-get-checkout-use-case';
 import { makeUpdateChargeUseCase } from '@/use-cases/factories/make-update-charge-use-case';
 import { makeUpdateCheckoutUseCase } from '@/use-cases/factories/make-update-checkout-use-case';
-// import { makeGetClientUseCase } from '@/use-cases/factories/make-get-client-use-case';
-// import { makeGetClientAddressUseCase } from '@/use-cases/factories/make-get-client-address-use-case';
+import { makeGetClientUseCase } from '@/use-cases/factories/make-get-client-use-case';
+import { makeGetClientAddressUseCase } from '@/use-cases/factories/make-get-client-address-use-case';
+
+interface HandleCreatePaymentClientDTO {
+	name: string;
+	document: string;
+	documentType: 'CPF' | 'CNPJ';
+	address: {
+		city: string;
+		complement: string;
+		district: string;
+		number: string;
+		stateCode: string;
+		street: string;
+		zipCode: string;
+	};
+}
 
 export async function handleCreatePix(req: FastifyRequest, reply: FastifyReply) {
-	// const handlePixSchema = z.discriminatedUnion('client', [
-	// 	z.object({
-	// 		slug: z.string(),
-	// 		client: z.string().uuid(),
-	// 	}),
-	// 	z.object({
-	// 		slug: z.string(),
-
-	// 		client: z.object({
-	// 			name: z.string(),
-	// 			document: z.string(),
-	// 			documentType: z.enum(['CPF', 'CNPJ']),
-	// 			address: z.object({
-	// 				city: z.string(),
-	// 				complement: z.string(),
-	// 				district: z.string(),
-	// 				number: z.string(),
-	// 				stateCode: z.string(),
-	// 				street: z.string(),
-	// 				zipCode: z.string(),
-	// 			}),
-	// 		}),
-	// 	}),
-	// ]);
-
 	const handlePixSchema = z.object({
 		slug: z.string(),
 
-		client: z.object({
-			name: z.string(),
-			document: z.string(),
-			documentType: z.enum(['CPF', 'CNPJ']),
-			address: z.object({
-				city: z.string(),
-				complement: z.string(),
-				district: z.string(),
-				number: z.string(),
-				stateCode: z.string(),
-				street: z.string(),
-				zipCode: z.string(),
-			}),
-		}),
+		client: z
+			.object({
+				name: z.string(),
+				document: z.string(),
+				documentType: z.enum(['CPF', 'CNPJ']),
+				address: z.object({
+					city: z.string(),
+					complement: z.string(),
+					district: z.string(),
+					number: z.string(),
+					stateCode: z.string(),
+					street: z.string(),
+					zipCode: z.string(),
+				}),
+			})
+			.or(z.string()),
 	});
 
 	const getChargeBySlugUseCase = makeGetChargeBySlugUseCase();
@@ -61,27 +53,46 @@ export async function handleCreatePix(req: FastifyRequest, reply: FastifyReply) 
 	const updateChargeUseCase = makeUpdateChargeUseCase();
 	const updateCheckoutUseCase = makeUpdateCheckoutUseCase();
 
-	// const getUserClientUseCase = makeGetClientUseCase();
-	// const getUserClientAddressUseCase = makeGetClientAddressUseCase();
+	const getUserClientUseCase = makeGetClientUseCase();
+	const getUserClientAddressUseCase = makeGetClientAddressUseCase();
 
 	const wePaymentsIntegration = new WePaymentsIntegration();
 
 	try {
-		// const { slug, client: parsedClient } = handlePixSchema.parse(req.body);
-		const { slug, client } = handlePixSchema.parse(req.body);
+		const { slug, client: clientInfo } = handlePixSchema.parse(req.body);
 
 		const { checkout } = await getCheckoutUseCase.execute({ slug: slug });
 		const { charge } = await getChargeBySlugUseCase.execute({ slug });
 		const { user } = await getUserUseCase.execute({ userId: charge.userId });
 
-		// let client: unknown;
+		let client: HandleCreatePaymentClientDTO;
 
-		// if (typeof client === 'string') {
-		// 	const { client } = await getUserClientUseCase.execute({ clientId: parsedClient });
-		// 	const { clientAddress } = await getUserClientAddressUseCase.execute({
-		// 		clientId: userClientId,
-		// 	});
-		// }
+		if (typeof clientInfo === 'string') {
+			const { client: fetchedClient } = await getUserClientUseCase.execute({
+				clientId: clientInfo,
+			});
+			const { clientAddress: fetchedClientAddress } =
+				await getUserClientAddressUseCase.execute({
+					clientId: clientInfo,
+				});
+
+			client = {
+				name: fetchedClient.name,
+				document: fetchedClient.document,
+				documentType: fetchedClient.documentType,
+				address: {
+					city: fetchedClientAddress.city,
+					complement: fetchedClientAddress.complement ?? '',
+					district: fetchedClientAddress.district,
+					number: fetchedClientAddress.number,
+					stateCode: fetchedClientAddress.stateCode,
+					street: fetchedClientAddress.street,
+					zipCode: fetchedClientAddress.zipCode,
+				}
+			};
+		} else {
+			client = clientInfo;
+		}
 
 		const { data } = await wePaymentsIntegration.createWePaymentsCharge('pix', {
 			amountInCents: charge.amountInCents,
@@ -125,6 +136,8 @@ export async function handleCreatePix(req: FastifyRequest, reply: FastifyReply) 
 				paymentTypeChosen: 'BOLETO',
 			},
 		});
+
+		// TODO: return info to display pix, info to display price, email and phone number
 
 		return reply.status(201).send({ message: 'Ok' });
 	} catch (err) {
