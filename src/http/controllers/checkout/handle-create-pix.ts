@@ -88,9 +88,11 @@ export async function handleCreatePix(req: FastifyRequest, reply: FastifyReply) 
 					stateCode: fetchedClientAddress.stateCode,
 					street: fetchedClientAddress.street,
 					zipCode: fetchedClientAddress.zipCode,
-				}
+				},
 			};
 		} else {
+			// TODO: Create client
+
 			client = clientInfo;
 		}
 

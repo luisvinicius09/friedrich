@@ -91,6 +91,8 @@ export async function handleCreateBoleto(req: FastifyRequest, reply: FastifyRepl
 				},
 			};
 		} else {
+			// TODO: Create client
+
 			client = clientInfo;
 		}
 
