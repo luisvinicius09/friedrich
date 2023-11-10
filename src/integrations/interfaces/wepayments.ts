@@ -8,6 +8,7 @@ export interface CreateChargeDTO {
 		name: string;
 		documentType: 'CPF' | 'CNPJ';
 		documentNumber: string;
+		email: string;
 		address: {
 			street: string;
 			number: string;
@@ -23,6 +24,9 @@ export interface CreateChargeDTO {
 		document: string;
 		name: string;
 	};
+
+	product_info?: unknown;
+	statement_descriptor?: unknown;
 }
 
 export type CreateChargeType = 'boleto' | 'pix' | 'credit-card';

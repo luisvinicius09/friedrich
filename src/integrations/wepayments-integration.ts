@@ -22,6 +22,7 @@ export class WePaymentsIntegration implements WePaymentsRepository {
 				name: z.string(),
 				documentType: z.enum(['CPF', 'CNPJ']),
 				documentNumber: z.string(),
+				email: z.string().email(),
 				address: z.object({
 					street: z.string(),
 					number: z.string(),
@@ -57,6 +58,7 @@ export class WePaymentsIntegration implements WePaymentsRepository {
 						number: buyer.documentNumber,
 						type: buyer.documentType,
 					},
+					email: buyer.email,
 					address: {
 						street: buyer.address.street,
 						number: buyer.address.number,
