@@ -14,6 +14,7 @@ interface HandleCreatePaymentClientDTO {
 	name: string;
 	document: string;
 	documentType: 'CPF' | 'CNPJ';
+	email: string;
 	address: {
 		city: string;
 		complement: string;
@@ -34,6 +35,7 @@ export async function handleCreateBoleto(req: FastifyRequest, reply: FastifyRepl
 				name: z.string(),
 				document: z.string(),
 				documentType: z.enum(['CPF', 'CNPJ']),
+				email: z.string().email(),
 				address: z.object({
 					city: z.string(),
 					complement: z.string(),
@@ -80,6 +82,7 @@ export async function handleCreateBoleto(req: FastifyRequest, reply: FastifyRepl
 				name: fetchedClient.name,
 				document: fetchedClient.document,
 				documentType: fetchedClient.documentType,
+				email: fetchedClient.email,
 				address: {
 					city: fetchedClientAddress.city,
 					complement: fetchedClientAddress.complement ?? '',
@@ -103,6 +106,7 @@ export async function handleCreateBoleto(req: FastifyRequest, reply: FastifyRepl
 				name: client.name,
 				documentNumber: client.document,
 				documentType: client.documentType,
+				email: client.email,
 				address: {
 					city: client.address.city,
 					complement: client.address.complement ?? '',
