@@ -31,8 +31,7 @@ describe('Create charge use case', () => {
 			userClientId: userClient.id,
 			userId: user.id,
 			userProductId: null,
-			checkoutId: null,
-			amountInCents: 1324,
+ 			amountInCents: 1324,
 			expireDate: new Date(),
 			selectedPaymentTypes: ['CREDIT_CARD', 'BOLETO'],
 		});

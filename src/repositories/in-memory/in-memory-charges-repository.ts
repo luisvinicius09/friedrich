@@ -11,7 +11,6 @@ export class InMemoryChargesRepository implements ChargesRepository {
 		userId: z.string(),
 		userClientId: z.string().nullable(),
 		userProductId: z.string().nullable(),
-		checkoutId: z.string().nullable(),
 		expireDate: z.date(),
 		amountInCents: z.number().positive(),
 		selectedPaymentTypes: z.array(
@@ -28,7 +27,6 @@ export class InMemoryChargesRepository implements ChargesRepository {
 			userId,
 			userClientId,
 			userProductId,
-			checkoutId,
 			expireDate,
 			amountInCents,
 			selectedPaymentTypes,
@@ -43,8 +41,8 @@ export class InMemoryChargesRepository implements ChargesRepository {
 			expireDate,
 			amountInCents,
 			selectedPaymentTypes,
+			externalId: null,
 			statusId: statusId ?? 1,
-			checkoutId: checkoutId,
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		} satisfies Charge;
@@ -60,7 +58,6 @@ export class InMemoryChargesRepository implements ChargesRepository {
 			userId,
 			userClientId,
 			userProductId,
-			checkoutId,
 			expireDate,
 			amountInCents,
 			selectedPaymentTypes,
@@ -75,8 +72,8 @@ export class InMemoryChargesRepository implements ChargesRepository {
 			expireDate,
 			amountInCents,
 			selectedPaymentTypes,
+			externalId: null,
 			statusId: statusId ?? 1,
-			checkoutId: checkoutId,
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		} satisfies Charge;

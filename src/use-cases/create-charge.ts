@@ -5,7 +5,6 @@ interface CreateChargeUseCaseRequest {
 	userId: string;
 	userClientId: string;
 	userProductId: string | null;
-	checkoutId?: string | null;
 	amountInCents: number;
 	expireDate: Date;
 	selectedPaymentTypes: PaymentType[];
@@ -22,7 +21,6 @@ export class CreateChargeUseCase {
 		userId,
 		userClientId,
 		userProductId,
-		checkoutId,
 		amountInCents,
 		expireDate,
 		selectedPaymentTypes,
@@ -31,7 +29,6 @@ export class CreateChargeUseCase {
 			userId,
 			userClientId,
 			userProductId,
-			checkoutId,
 			amountInCents,
 			expireDate,
 			selectedPaymentTypes,
