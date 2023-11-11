@@ -3,7 +3,7 @@ import { Charge, PaymentType } from '@prisma/client';
 
 interface CreateChargeUseCaseRequest {
 	userId: string;
-	userClientId: string;
+	userClientId: string | null;
 	userProductId: string | null;
 	amountInCents: number;
 	expireDate: Date;

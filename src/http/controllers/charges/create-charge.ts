@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 export async function createCharge(req: FastifyRequest, reply: FastifyReply) {
 	const chargeBodySchema = z.object({
-		userClientId: z.string(),
+		userClientId: z.string().nullable(),
 		userProductId: z.string().nullable(),
 		amountInCents: z.number(),
 		expireDate: z.coerce.date().min(new Date()), // TODO: validation
