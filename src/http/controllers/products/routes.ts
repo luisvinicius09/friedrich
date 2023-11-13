@@ -3,6 +3,7 @@ import { createProduct } from './create-product';
 import { verifyJwt } from '@/http/middlewares/verify-jwt';
 import { removeProduct } from './remove-product';
 import { updateProduct } from './update-product';
+import { listProducts } from './list-products';
 
 export async function productsRoutes(app: FastifyInstance) {
 	app.post('/product/create', { onRequest: [verifyJwt] }, createProduct);
@@ -10,4 +11,6 @@ export async function productsRoutes(app: FastifyInstance) {
 	app.put('/product/:productId', { onRequest: [verifyJwt] }, updateProduct);
 
 	app.delete('/product/:productId', { onRequest: [verifyJwt] }, removeProduct);
+
+	app.get('/products', { onRequest: [verifyJwt] }, listProducts);
 }
