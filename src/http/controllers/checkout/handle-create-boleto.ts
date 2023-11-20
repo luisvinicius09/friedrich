@@ -9,6 +9,8 @@ import { makeUpdateCheckoutUseCase } from '@/use-cases/factories/make-update-che
 import { makeGetCheckoutUseCase } from '@/use-cases/factories/make-get-checkout-use-case';
 import { makeGetClientUseCase } from '@/use-cases/factories/make-get-client-use-case';
 import { makeGetClientAddressUseCase } from '@/use-cases/factories/make-get-client-address-use-case';
+import { makeCreateClientUseCase } from '@/use-cases/factories/make-create-client-use-case';
+import { makeCreateClientAddressUseCase } from '@/use-cases/factories/make-create-client-address-use-case';
 
 interface HandleCreatePaymentClientDTO {
 	name: string;
@@ -36,6 +38,7 @@ export async function handleCreateBoleto(req: FastifyRequest, reply: FastifyRepl
 				document: z.string(),
 				documentType: z.enum(['CPF', 'CNPJ']),
 				email: z.string().email(),
+				phoneNumber: z.number(),
 				address: z.object({
 					city: z.string(),
 					complement: z.string(),
@@ -57,6 +60,9 @@ export async function handleCreateBoleto(req: FastifyRequest, reply: FastifyRepl
 
 	const getUserClientUseCase = makeGetClientUseCase();
 	const getUserClientAddressUseCase = makeGetClientAddressUseCase();
+
+	const createUserClientUseCase = makeCreateClientUseCase();
+	const createUserClientAddressUseCase = makeCreateClientAddressUseCase();
 
 	const wePaymentsIntegration = new WePaymentsIntegration();
 
@@ -94,7 +100,25 @@ export async function handleCreateBoleto(req: FastifyRequest, reply: FastifyRepl
 				},
 			};
 		} else {
-			// TODO: Create client
+			const { userClient } = await createUserClientUseCase.execute({
+				name: clientInfo.name,
+				userId: user.id,
+				document: clientInfo.document,
+				documentType: clientInfo.documentType,
+				email: clientInfo.email,
+				phoneNumber: clientInfo.phoneNumber, // TODO: fix phone number
+			});
+
+			await createUserClientAddressUseCase.execute({
+				city: clientInfo.address.city,
+				clientId: userClient.id,
+				complement: clientInfo.address.complement,
+				district: clientInfo.address.district,
+				number: clientInfo.address.number,
+				stateCode: clientInfo.address.stateCode,
+				street: clientInfo.address.street,
+				zipCode: clientInfo.address.zipCode,
+			});
 
 			client = clientInfo;
 		}
@@ -145,7 +169,13 @@ export async function handleCreateBoleto(req: FastifyRequest, reply: FastifyRepl
 
 		// TODO: return info to display pix, info to display price, email and phone number
 
-		return reply.status(201).send({ message: 'Ok' });
+		return reply.status(201).send({
+			data: {
+				amountInCents: data.amountCents,
+				digitableLine: data.digitableLine,
+				barcodeNumber: data.barCodeNumber,
+			},
+		});
 	} catch (err) {
 		return reply.status(500).send({ message: 'Internal Error' });
 	}
