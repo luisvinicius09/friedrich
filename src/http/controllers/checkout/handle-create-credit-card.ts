@@ -7,25 +7,46 @@ import { makeGetUserUseCase } from '@/use-cases/factories/make-get-user-use-case
 import { makeUpdateChargeUseCase } from '@/use-cases/factories/make-update-charge-use-case';
 import { makeUpdateCheckoutUseCase } from '@/use-cases/factories/make-update-checkout-use-case';
 import { WePaymentsIntegration } from '@/integrations/wepayments-integration';
+import { makeGetClientUseCase } from '@/use-cases/factories/make-get-client-use-case';
+import { makeGetClientAddressUseCase } from '@/use-cases/factories/make-get-client-address-use-case';
 
-export async function handleCreditCard(req: FastifyRequest, reply: FastifyReply) {
-	const handlePixSchema = z.object({
+interface HandleCreatePaymentClientDTO {
+	name: string;
+	document: string;
+	documentType: 'CPF' | 'CNPJ';
+	email: string;
+	address: {
+		city: string;
+		complement: string;
+		district: string;
+		number: string;
+		stateCode: string;
+		street: string;
+		zipCode: string;
+	};
+}
+
+export async function handleCreateCreditCard(req: FastifyRequest, reply: FastifyReply) {
+	const handleCreditCardSchema = z.object({
 		slug: z.string(),
 
-		client: z.object({
-			name: z.string(),
-			document: z.string(),
-			documentType: z.enum(['CPF', 'CNPJ']),
-			address: z.object({
-				city: z.string(),
-				complement: z.string(),
-				district: z.string(),
-				number: z.string(),
-				stateCode: z.string(),
-				street: z.string(),
-				zipCode: z.string(),
-			}),
-		}),
+		client: z
+			.object({
+				name: z.string(),
+				document: z.string(),
+				documentType: z.enum(['CPF', 'CNPJ']),
+				email: z.string().email(),
+				address: z.object({
+					city: z.string(),
+					complement: z.string(),
+					district: z.string(),
+					number: z.string(),
+					stateCode: z.string(),
+					street: z.string(),
+					zipCode: z.string(),
+				}),
+			})
+			.or(z.string()),
 	});
 
 	const getChargeBySlugUseCase = makeGetChargeBySlugUseCase();
@@ -34,14 +55,47 @@ export async function handleCreditCard(req: FastifyRequest, reply: FastifyReply)
 	const updateChargeUseCase = makeUpdateChargeUseCase();
 	const updateCheckoutUseCase = makeUpdateCheckoutUseCase();
 
+	const getUserClientUseCase = makeGetClientUseCase();
+	const getUserClientAddressUseCase = makeGetClientAddressUseCase();
+
 	const wePaymentsIntegration = new WePaymentsIntegration();
 
 	try {
-		const { slug, client } = handlePixSchema.parse(req.body);
+		const { slug, client: clientInfo } = handleCreditCardSchema.parse(req.body);
 
 		const { checkout } = await getCheckoutUseCase.execute({ slug: slug });
 		const { charge } = await getChargeBySlugUseCase.execute({ slug });
 		const { user } = await getUserUseCase.execute({ userId: charge.userId });
+
+		let client: HandleCreatePaymentClientDTO;
+
+		if (typeof clientInfo === 'string') {
+			const { client: fetchedClient } = await getUserClientUseCase.execute({
+				clientId: clientInfo,
+			});
+			const { clientAddress: fetchedClientAddress } =
+				await getUserClientAddressUseCase.execute({
+					clientId: clientInfo,
+				});
+
+			client = {
+				name: fetchedClient.name,
+				document: fetchedClient.document,
+				documentType: fetchedClient.documentType,
+				email: fetchedClient.email,
+				address: {
+					city: fetchedClientAddress.city,
+					complement: fetchedClientAddress.complement ?? '',
+					district: fetchedClientAddress.district,
+					number: fetchedClientAddress.number,
+					stateCode: fetchedClientAddress.stateCode,
+					street: fetchedClientAddress.street,
+					zipCode: fetchedClientAddress.zipCode,
+				},
+			};
+		} else {
+			client = clientInfo;
+		}
 
 		const { data } = await wePaymentsIntegration.createWePaymentsCharge('credit-card', {
 			amountInCents: charge.amountInCents,
@@ -50,6 +104,7 @@ export async function handleCreditCard(req: FastifyRequest, reply: FastifyReply)
 				name: client.name,
 				documentNumber: client.document,
 				documentType: client.documentType,
+				email: client.email,
 				address: {
 					city: client.address.city,
 					complement: client.address.complement ?? '',
